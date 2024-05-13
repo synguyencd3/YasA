@@ -1,6 +1,7 @@
 package com.nashtech.rookie.yasa.controller;
 
 import com.nashtech.rookie.yasa.entity.Category;
+import com.nashtech.rookie.yasa.entity.Product;
 import com.nashtech.rookie.yasa.service.category.CategoryService;
 import com.nashtech.rookie.yasa.service.category.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

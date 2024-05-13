@@ -1,6 +1,7 @@
 package com.nashtech.rookie.yasa.service.category;
 
 import com.nashtech.rookie.yasa.entity.Category;
+import com.nashtech.rookie.yasa.entity.Product;
 import com.nashtech.rookie.yasa.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,4 +21,5 @@ public class CategoryServiceImpl implements CategoryService{
     public Category createCategory(Category newCategory) {
         return categoryRepository.save(newCategory);
     }
+
 }
