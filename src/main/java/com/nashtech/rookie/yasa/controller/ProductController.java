@@ -26,6 +26,7 @@ public class ProductController {
        return ResponseEntity.ok(productService.createProduct(newProduct));
     }
 
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") int id) {
@@ -38,7 +39,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.updateProduct(id, product));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") int id)
-    {}
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> deleteProduct(@PathVariable("id") int id)
+//    {}
 }

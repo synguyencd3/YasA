@@ -19,28 +19,27 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    private ProductMapper mapper;
+
     @Override
     public List<ProductDto> getAllProducts() {
-        return productRepository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
+        return productRepository.findAll().stream().map(ProductMapper.INSTANCE::toDto).collect(Collectors.toList());
     }
 
     @Override
     public ProductDto createProduct(CreateProductDto dto) {
-        Product product = mapper.toEntity(dto);
+        Product product = ProductMapper.INSTANCE.toEntity(dto);//mapper.toEntity(dto);
         product = productRepository.save(product);
-        return mapper.toDto(product);
+        return ProductMapper.INSTANCE.toDto(product);
     }
 
     @Override
     public ProductDto getProduct(int id) {
-        return productRepository.findById(id).map(mapper::toDto).orElseThrow(ProductNotFoundException::new);
+        return productRepository.findById(id).map(ProductMapper.INSTANCE::toDto).orElseThrow(ProductNotFoundException::new);
     }
 
     @Override
     public List<ProductDto> getAllInCategory(int id) {
-        return productRepository.findByCategory_Id(id).stream().map(mapper::toDto).collect(Collectors.toList());
+        return productRepository.findByCategory_Id(id).stream().map(ProductMapper.INSTANCE::toDto).collect(Collectors.toList());
     }
 
 
@@ -48,9 +47,9 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductDto updateProduct(int id, UpdateProductDto dto) {
         return productRepository.findById(id).map(product -> {
-            var updatedProduct = mapper.updateEntity(product,dto);
+            var updatedProduct = ProductMapper.INSTANCE.updateEntity(product,dto);
             updatedProduct = productRepository.save(updatedProduct);
-            return mapper.toDto(updatedProduct);
+            return ProductMapper.INSTANCE.toDto(updatedProduct);
         }).orElseThrow(ProductNotFoundException::new);
     }
 
