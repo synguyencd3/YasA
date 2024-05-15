@@ -1,9 +1,14 @@
 package com.nashtech.rookie.yasa.controller;
 
+import com.nashtech.rookie.yasa.dto.request.CreateRatingDto;
+import com.nashtech.rookie.yasa.dto.request.UpdateRatingDto;
+import com.nashtech.rookie.yasa.dto.response.RatingDto;
 import com.nashtech.rookie.yasa.entity.Rating;
 import com.nashtech.rookie.yasa.service.rating.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,25 +21,33 @@ public class RatingController {
     private RatingService ratingService;
 
     @PostMapping
-    public Rating createRating(@RequestBody Rating rating) {
-      return ratingService.createRating(rating);
+    public RatingDto createRating(@RequestBody CreateRatingDto dto) {
+      return ratingService.createRating(dto);
     }
 
-//    @GetMapping
-//    public List<Rating> getAll(@RequestParam(name="user", required = false) Integer userId,
-//                               @RequestParam(name="product", required = false) Integer productId) {
-//
-//    if (userId != null && productId == null) //
-//    if (userId == null && productId != null)//
-//    if (userId != null && productId != null) //
-//        return ratingService.getAll();
-//    }
-
     @GetMapping
-    public List<Rating> getAll()
-    {
+    public List<RatingDto> getAll(@RequestParam(name="user", required = false) Integer userId,
+                               @RequestParam(name="product", required = false) Integer productId) {
+    if (userId != null && productId == null) return ratingService.getByUser(userId);
+    if (userId == null && productId != null) return ratingService.getByProduct(productId);
+    if (userId != null && productId != null) return ratingService.getByUserAndProduct(userId,productId);
         return ratingService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public RatingDto getRating(@PathVariable(name="id") int ratingId){
+       return ratingService.getRating(ratingId);
+    }
+
+    @PutMapping("/{id}")
+    public RatingDto updateRating(@PathVariable(name="id") int ratingId, UpdateRatingDto rating) {
+        return ratingService.updateRating(ratingId, rating);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRating(@PathVariable(name="id")int id) {
+        ratingService.deleteRating(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
