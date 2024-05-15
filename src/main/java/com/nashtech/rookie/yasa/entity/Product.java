@@ -24,13 +24,15 @@ public class Product {
     private String description;
     private String image;
 
+//    @Column(name="average_rating")
+//    private float rating;
+
     @ManyToOne
     @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
 
-    public Product(String name, int price, String description) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-    }
+    @OneToMany
+    @JoinColumn(name = "productId")
+    private List<Rating> rating;
+
 }

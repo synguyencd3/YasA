@@ -16,8 +16,10 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping()
-    public ResponseEntity<List<ProductDto>> getAll(@RequestParam(required = false, name="category") Optional<Integer> category) {
-        return category.map(integer -> ResponseEntity.ok(productService.getAllInCategory(integer))).orElseGet(() -> ResponseEntity.ok(productService.getAllProducts()));
+    public ResponseEntity<List<ProductDto>> getAll(@RequestParam(required = false, name="category") Integer category) {
+        if (category!= null)
+            return ResponseEntity.ok(productService.getAllInCategory(category));
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @PostMapping
