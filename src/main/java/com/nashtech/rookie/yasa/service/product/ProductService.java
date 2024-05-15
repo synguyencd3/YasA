@@ -13,11 +13,11 @@ public interface ProductService {
     public List<ProductDto> getAllProducts();
     public ProductDto createProduct(CreateProductDto dto);
 
-    //public ProductDto createProduct(Product dto);
-
     public ProductDto getProduct(int id);
 
     public List<ProductDto> getAllInCategory(int id);
 
     public ProductDto updateProduct(int id, UpdateProductDto dto);
+
+    public void deleteProduct(int id);
 }

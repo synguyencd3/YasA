@@ -53,5 +53,10 @@ public class ProductServiceImpl implements ProductService {
         }).orElseThrow(ProductNotFoundException::new);
     }
 
+    @Override
+    public void deleteProduct(int id) {
+        productRepository.deleteById(id);
+    }
+
 
 }
