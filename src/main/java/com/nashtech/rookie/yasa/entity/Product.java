@@ -1,5 +1,6 @@
 package com.nashtech.rookie.yasa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,8 +32,8 @@ public class Product {
     @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
 
-    @OneToMany
-    @JoinColumn(name = "productId")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Rating> rating;
 
 }

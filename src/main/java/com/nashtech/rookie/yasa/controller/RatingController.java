@@ -20,13 +20,19 @@ public class RatingController {
       return ratingService.createRating(rating);
     }
 
-    @GetMapping
-    public List<Rating> getAll(@RequestParam(name="user", required = false) Integer userId,
-                               @RequestParam(name="product", required = false) Integer productId) {
+//    @GetMapping
+//    public List<Rating> getAll(@RequestParam(name="user", required = false) Integer userId,
+//                               @RequestParam(name="product", required = false) Integer productId) {
+//
+//    if (userId != null && productId == null) //
+//    if (userId == null && productId != null)//
+//    if (userId != null && productId != null) //
+//        return ratingService.getAll();
+//    }
 
-    if (userId != null && productId == null) //
-    if (userId == null && productId != null)//
-    if (userId != null && productId != null)
+    @GetMapping
+    public List<Rating> getAll()
+    {
         return ratingService.getAll();
     }
 
