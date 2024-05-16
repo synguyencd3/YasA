@@ -6,6 +6,6 @@ import com.nashtech.rookie.yasa.dto.response.UserDto;
 
 public interface AuthService {
 
-    UserDto Register(RegisterDto dto);
-    UserDto Login(LoginDto dto);
+    UserDto register(RegisterDto dto);
+    UserDto login(LoginDto dto);
 }

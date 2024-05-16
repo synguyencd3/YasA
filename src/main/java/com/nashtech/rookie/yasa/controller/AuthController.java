@@ -1,5 +1,6 @@
 package com.nashtech.rookie.yasa.controller;
 
+import com.nashtech.rookie.yasa.dto.request.LoginDto;
 import com.nashtech.rookie.yasa.dto.request.RegisterDto;
 import com.nashtech.rookie.yasa.dto.response.UserDto;
 import com.nashtech.rookie.yasa.service.auth.AuthService;
@@ -18,6 +19,13 @@ public class AuthController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserDto> register(@RequestBody RegisterDto dto){
-        return ResponseEntity.ok(authService.Register(dto));
+        return ResponseEntity.ok(authService.register(dto));
+    }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<UserDto> login(@RequestBody LoginDto dto)
+    {
+        return ResponseEntity.ok(authService.login(dto));
     }
 }
