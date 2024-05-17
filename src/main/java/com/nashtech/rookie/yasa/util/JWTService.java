@@ -60,11 +60,11 @@ public class JWTService {
     }
 
 
-    public static void main(String[] args)
-    {
-        User user = new User();
-        user.setUsername("test jwt");
-        user.setName("nguyen");
-        System.out.println(verifyJWT(createJWT(user)));
-    }
+//    public static void main(String[] args)
+//    {
+//        User user = new User();
+//        user.setUsername("test jwt");
+//        user.setName("nguyen");
+//        System.out.println(verifyJWT(createJWT(user)));
+//    }
 }
