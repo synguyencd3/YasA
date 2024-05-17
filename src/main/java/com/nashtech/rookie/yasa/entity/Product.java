@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -35,5 +36,8 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Rating> rating;
+
+    @OneToMany(mappedBy = "product")
+    Set<CartDetail> cart;
 
 }

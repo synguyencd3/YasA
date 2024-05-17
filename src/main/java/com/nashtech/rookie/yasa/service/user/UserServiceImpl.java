@@ -1,27 +1,26 @@
-package com.nashtech.rookie.yasa.service.auth;
+package com.nashtech.rookie.yasa.service.user;
 import com.nashtech.rookie.yasa.dto.request.LoginDto;
 import com.nashtech.rookie.yasa.dto.request.RegisterDto;
 import com.nashtech.rookie.yasa.dto.response.UserDto;
+import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.entity.User;
 import com.nashtech.rookie.yasa.exceptions.CantLoginException;
-import com.nashtech.rookie.yasa.exceptions.CantRegisterException;
 import com.nashtech.rookie.yasa.mapper.UserMapper;
 import com.nashtech.rookie.yasa.repository.UserRepository;
+import com.nashtech.rookie.yasa.service.cart.CartService;
 import com.nashtech.rookie.yasa.util.SHA521Hasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Arrays;
 import java.util.Base64;
 
 @Service
-public class AuthServiceImpl implements AuthService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CartService cartService;
+
     @Override
     public UserDto register(RegisterDto dto) {
         //Generate salt
@@ -35,6 +34,8 @@ public class AuthServiceImpl implements AuthService{
         user.setRole("user");
         user.setSalt(Base64.getEncoder().encodeToString(salt));
         user.setSecret(hashedPassword);
+        user.setCart(cartService.createCart(user));
+
         user =userRepository.save(user);
 
         return UserMapper.INSTANCE.toDto(user);
