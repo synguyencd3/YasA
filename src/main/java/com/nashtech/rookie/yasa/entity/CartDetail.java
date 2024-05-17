@@ -17,15 +17,19 @@ public class CartDetail {
     @EmbeddedId
     private CartDetailKey id;
 
-    @ManyToOne
+    @ManyToOne()
     @MapsId("cartId")
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @ManyToOne
+    @ManyToOne()
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
 
     private int quantity;
+
+    public void addQuantity(int quantity) {
+        this.quantity+=quantity;
+    }
 }

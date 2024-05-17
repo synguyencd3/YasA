@@ -11,5 +11,5 @@ import java.util.Set;
 public class CartDto {
     private int id;
     private int total;
-    private Set<CartDetail> products;
+    private Set<CartDetailDto> products;
 }

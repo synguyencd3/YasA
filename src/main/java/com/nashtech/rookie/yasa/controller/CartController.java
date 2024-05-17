@@ -22,8 +22,7 @@ public class CartController {
     }
 
     @PostMapping("/{cartId}")
-    public ResponseEntity<CartDto> addProductToCart(@PathVariable int cartId, @RequestBody List<CartItemDto> cartItemDto) {
-//        Cart updatedCart = cartService.addProductToCart(userId, cartItemDto);
-//        return new ResponseEntity<>(updatedCart, HttpStatus.OK);
+    public ResponseEntity<CartDto> addProductToCart(@PathVariable int cartId, @RequestBody CartItemDto cartItemDto) {
+        return ResponseEntity.ok(cartService.addToCart(cartId, cartItemDto));
     }
 }
