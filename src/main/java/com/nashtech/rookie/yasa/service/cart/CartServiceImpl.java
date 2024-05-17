@@ -1,7 +1,10 @@
 package com.nashtech.rookie.yasa.service.cart;
 
+import com.nashtech.rookie.yasa.dto.response.CartDto;
 import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.entity.User;
+import com.nashtech.rookie.yasa.exceptions.NotFoundException;
+import com.nashtech.rookie.yasa.mapper.CartMapper;
 import com.nashtech.rookie.yasa.mapper.CategoryMapper;
 import com.nashtech.rookie.yasa.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,11 @@ public class CartServiceImpl implements CartService {
        Cart cart = new Cart();
        cart.setUser(user);
        return cartRepository.save(cart);
+    }
+
+    @Override
+    public CartDto getCart(int id){
+        return cartRepository.findById(id).map(CartMapper.INSTANCE::toDto).orElseThrow(NotFoundException::new);
     }
 
 

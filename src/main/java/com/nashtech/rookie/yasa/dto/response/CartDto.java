@@ -9,6 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class CartDto {
+    private int id;
     private int total;
     private Set<CartDetail> products;
 }
