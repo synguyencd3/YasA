@@ -4,10 +4,13 @@ import com.nashtech.rookie.yasa.entity.Product;
 import com.nashtech.rookie.yasa.repository.ProductRepository;
 import com.nashtech.rookie.yasa.service.product.ProductServiceImpl;
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class ProductServiceTest {
 
     @Mock
@@ -46,6 +48,11 @@ public class ProductServiceTest {
 
         assertThat(productList).isNotNull();
         assertThat(productList.size()).isEqualTo(2);
+    }
+
+    @BeforeEach
+    public void reset_mock() {
+        productService = mock(ProductServiceImpl.class);
     }
 
     @Test
