@@ -1,4 +1,4 @@
-package com.nashtech.rookie.yasa.controller;
+package com.nashtech.rookie.yasa.service;
 import com.nashtech.rookie.yasa.dto.request.CreateProductDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateProductDto;
 import com.nashtech.rookie.yasa.entity.Product;
@@ -100,7 +100,7 @@ public class ProductServiceTest {
         when(productRepository.save(any(Product.class))).thenReturn(product);
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         productService.updateProduct(product.getId(), newProduct);
-        
+
         verify(productRepository).save(updatedProduct);
         verify(productRepository).findById(product.getId());
     }
