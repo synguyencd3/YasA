@@ -1,8 +1,11 @@
 package com.nashtech.rookie.yasa.controller;
 import com.nashtech.rookie.yasa.dto.request.CreateProductDto;
+import com.nashtech.rookie.yasa.dto.request.UpdateProductDto;
 import com.nashtech.rookie.yasa.entity.Product;
+import com.nashtech.rookie.yasa.mapper.ProductMapper;
 import com.nashtech.rookie.yasa.repository.ProductRepository;
 import com.nashtech.rookie.yasa.service.product.ProductServiceImpl;
+import net.bytebuddy.pool.TypePool;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Test;
@@ -10,13 +13,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.nullValue;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -78,8 +80,29 @@ public class ProductServiceTest {
         Product product = new Product();
         product.setId(1);
         product.setName("test");
-        given(productRepository.findById(anyInt())).willReturn(Optional.empty());
+        when(productRepository.findById(anyInt())).thenReturn(Optional.empty());
         productService.deleteProduct(product.getId());
    }
+
+    @Test
+    public void whenGivenId_shouldUpdateProduct_ifFound() {
+
+        //init product
+        Product product = new Product();
+        product.setId(1);
+        product.setName("test");
+
+        //init a updated product
+        UpdateProductDto newProduct = new UpdateProductDto();
+        newProduct.setName("new test name");
+        var updatedProduct = ProductMapper.INSTANCE.updateEntity(product, newProduct);
+
+        when(productRepository.save(any(Product.class))).thenReturn(product);
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        productService.updateProduct(product.getId(), newProduct);
+        
+        verify(productRepository).save(updatedProduct);
+        verify(productRepository).findById(product.getId());
+    }
 
 }
