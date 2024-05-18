@@ -16,5 +16,5 @@ public class ProductDto {
     private String description;
     private String image;
     private Category category;
-    private List<Rating> rating;
+   // private List<Rating> rating;
 }
