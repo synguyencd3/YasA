@@ -4,6 +4,7 @@ import com.nashtech.rookie.yasa.dto.request.CartItemDto;
 import com.nashtech.rookie.yasa.dto.request.CartUpdateQuantityDto;
 import com.nashtech.rookie.yasa.dto.response.CartDto;
 import com.nashtech.rookie.yasa.entity.*;
+import com.nashtech.rookie.yasa.exceptions.CartNotFoundException;
 import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.CartItemMapper;
 import com.nashtech.rookie.yasa.mapper.CartMapper;
@@ -33,7 +34,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDto getCart(int id){
-        return cartRepository.findById(id).map(CartMapper.INSTANCE::toDto).orElseThrow(NotFoundException::new);
+        return cartRepository.findById(id).map(CartMapper.INSTANCE::toDto).orElseThrow(CartNotFoundException::new);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class CartServiceImpl implements CartService {
 
         CartDetail cartDetail = CartItemMapper.INSTANCE.toEntity(cartItem);
         Cart cart = cartRepository.findById(cartId).orElseThrow(NotFoundException::new);
-        Product product = productRepository.findById(cartItem.getProductId() ).orElseThrow(NotFoundException::new);
+        Product product = productRepository.findById(cartItem.getProductId() ).orElseThrow(CartNotFoundException::new);
 
         //init key
         CartDetailKey key = new CartDetailKey();
@@ -67,7 +68,7 @@ public class CartServiceImpl implements CartService {
         }
 
 
-        return CartMapper.INSTANCE.toDto(cartRepository.findById(cartId).orElseThrow(NotFoundException::new));
+        return CartMapper.INSTANCE.toDto(cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new));
     }
 
     @Override
@@ -85,7 +86,7 @@ public class CartServiceImpl implements CartService {
         key.setProductId(productId);
         key.setCartId(cartId);
 
-        CartDetail cartDetail = cartDetailRepository.findById(key).orElseThrow(NotFoundException::new);
+        CartDetail cartDetail = cartDetailRepository.findById(key).orElseThrow(CartNotFoundException::new);
         cartDetail.setQuantity(dto.getQuantity());
         cartDetailRepository.save(cartDetail);
 

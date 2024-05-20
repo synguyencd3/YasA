@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/rating")
+@RequestMapping("api/ratings")
 public class RatingController {
 
     @Autowired

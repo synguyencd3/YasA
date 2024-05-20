@@ -4,6 +4,7 @@ import com.nashtech.rookie.yasa.dto.request.CreateProductDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateProductDto;
 import com.nashtech.rookie.yasa.dto.response.ProductDto;
 import com.nashtech.rookie.yasa.service.product.ProductService;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,18 +32,18 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") int id) {
+    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") @Min(value = 1, message = "invalid product id") int id) {
 
         return ResponseEntity.ok(productService.getProduct(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") int id,@RequestBody UpdateProductDto product) {
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id")  @Min(value = 1, message = "invalid product id")int id,@RequestBody UpdateProductDto product) {
         return ResponseEntity.ok(productService.updateProduct(id, product));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") int id)
+    public ResponseEntity<String> deleteProduct(@PathVariable("id")  @Min(value = 1, message = "invalid product id") int id)
     {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
