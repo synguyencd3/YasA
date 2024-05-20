@@ -1,6 +1,7 @@
 package com.nashtech.rookie.yasa.service.cart;
 
 import com.nashtech.rookie.yasa.dto.request.CartItemDto;
+import com.nashtech.rookie.yasa.dto.request.CartUpdateQuantityDto;
 import com.nashtech.rookie.yasa.dto.response.CartDto;
 import com.nashtech.rookie.yasa.entity.*;
 import com.nashtech.rookie.yasa.exceptions.NotFoundException;
@@ -60,13 +61,35 @@ public class CartServiceImpl implements CartService {
         } else
         {
             CartDetail existedCart = existed.get();
-            existedCart.addQuantity(existedCart.getQuantity()+cartItem.getQuantity());
+            existedCart.addQuantity(cartItem.getQuantity());
             cart.getProducts().add(existedCart);
             cartDetailRepository.save(existedCart);
         }
 
 
         return CartMapper.INSTANCE.toDto(cartRepository.findById(cartId).orElseThrow(NotFoundException::new));
+    }
+
+    @Override
+    public CartDto removeProductFromCart(int cartId, int productId) {
+        CartDetailKey key = new CartDetailKey();
+        key.setProductId(productId);
+        key.setCartId(cartId);
+        cartDetailRepository.deleteById(key);
+        return getCart(cartId);
+    }
+
+    @Override
+    public CartDto updateProductQuantity(int cartId, int productId, CartUpdateQuantityDto dto) {
+        CartDetailKey key = new CartDetailKey();
+        key.setProductId(productId);
+        key.setCartId(cartId);
+
+        CartDetail cartDetail = cartDetailRepository.findById(key).orElseThrow(NotFoundException::new);
+        cartDetail.setQuantity(dto.getQuantity());
+        cartDetailRepository.save(cartDetail);
+
+        return getCart(cartId);
     }
 
 
