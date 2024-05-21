@@ -11,6 +11,7 @@ import com.nashtech.rookie.yasa.repository.CartDetailRepository;
 import com.nashtech.rookie.yasa.repository.CartRepository;
 import com.nashtech.rookie.yasa.repository.OrderDetailRepository;
 import com.nashtech.rookie.yasa.repository.OrderRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private CartDetailRepository cartDetailRepository;
@@ -47,8 +49,15 @@ public class OrderServiceImpl implements OrderService {
         Set<OrderDetail> orderDetails = cartDetailRepository.findByCartId(cart.getId())
                 .stream().map(orderDetail ->CartToOrderMapper.INSTANCE.convert(orderDetail, finalOrder.getId(), finalOrder)).collect(Collectors.toSet());
         order.setProducts(orderDetails);
+
         orderDetailRepository.saveAll(orderDetails);
+        cartDetailRepository.deleteByCartId(cartId);
         return OrderMapper.INSTANCE.toDto(order);
 
+    }
+
+    @Override
+    public List<OrderDto> getAll() {
+        return orderRepository.findAll().stream().map(OrderMapper.INSTANCE::toDto).collect(Collectors.toList());
     }
 }
