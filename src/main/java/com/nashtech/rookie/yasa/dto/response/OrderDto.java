@@ -10,6 +10,7 @@ import java.util.Set;
 public class OrderDto {
     private int id;
     private int total;
+    private String phone;
     private String name;
     private String address;
     private Set<OrderDetailDto> products;

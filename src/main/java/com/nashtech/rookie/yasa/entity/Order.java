@@ -25,7 +25,7 @@ public class Order extends Audit{
     private String phone;
 
     @Column(name = "name")
-    private String recepientName;
+    private String name;
 
     @Column(nullable = false)
     private String status;

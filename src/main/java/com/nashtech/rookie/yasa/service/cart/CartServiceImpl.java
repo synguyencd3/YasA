@@ -56,7 +56,6 @@ public class CartServiceImpl implements CartService {
             cartDetail.setId(key);
             cartDetail.setCart(cart);
             cartDetail.setProduct(product);
-            cartDetail.addQuantity(cartItem.getQuantity());
             cart.getProducts().add(cartDetail);
             cartDetailRepository.save(cartDetail);
         } else

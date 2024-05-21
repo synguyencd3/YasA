@@ -1,5 +1,6 @@
 package com.nashtech.rookie.yasa.service.order;
 
+import com.nashtech.rookie.yasa.dto.request.CreateOrderDto;
 import com.nashtech.rookie.yasa.dto.response.OrderDto;
 import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.entity.Order;
@@ -32,11 +33,11 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
     @Override
-    public OrderDto createOrder(int cartId) {
+    public OrderDto createOrder(int cartId, CreateOrderDto dto) {
 
 
         Cart cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
-        Order order = new Order();
+        Order order = OrderMapper.INSTANCE.toEntity(dto);//new Order();
         order.setUser(cart.getUser());
 
         //suppose to set other fields
