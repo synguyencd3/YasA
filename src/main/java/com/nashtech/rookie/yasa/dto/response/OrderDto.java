@@ -9,7 +9,6 @@ import java.util.Set;
 @Setter
 public class OrderDto {
     private int id;
-    private int cartId;
     private int total;
     private String name;
     private String address;

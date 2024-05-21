@@ -6,7 +6,6 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 @ToString
 @Table(name = "users")

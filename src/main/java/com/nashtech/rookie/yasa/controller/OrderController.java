@@ -1,13 +1,19 @@
 package com.nashtech.rookie.yasa.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.nashtech.rookie.yasa.dto.response.OrderDto;
+import com.nashtech.rookie.yasa.service.order.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
 
-
-    public  createOrder()
+    @Autowired
+    private OrderService orderService;
+    @PostMapping("/{id}")
+    public ResponseEntity<OrderDto> createOrder(@PathVariable("id") int cartId){
+        return ResponseEntity.ok(orderService.createOrder(cartId));
+    }
 }
