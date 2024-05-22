@@ -5,6 +5,7 @@ import com.nashtech.rookie.yasa.dto.request.CartUpdateQuantityDto;
 import com.nashtech.rookie.yasa.dto.response.CartDto;
 import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.service.cart.CartService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class CartController {
     }
 
     @PostMapping("/{cartId}")
-    public ResponseEntity<CartDto> addProductToCart(@PathVariable int cartId, @RequestBody CartItemDto cartItemDto) {
+    public ResponseEntity<CartDto> addProductToCart(@PathVariable int cartId, @RequestBody @Valid CartItemDto cartItemDto) {
         return ResponseEntity.ok(cartService.addToCart(cartId, cartItemDto));
     }
 
@@ -34,7 +35,7 @@ public class CartController {
     }
 
     @PatchMapping("/{cartId}/products/{productId}")
-    public ResponseEntity<CartDto> updateProductQuantity(@PathVariable int cartId, @PathVariable int productId, @RequestBody CartUpdateQuantityDto dto) {
+    public ResponseEntity<CartDto> updateProductQuantity(@PathVariable int cartId, @PathVariable int productId, @RequestBody @Valid CartUpdateQuantityDto dto) {
         return ResponseEntity.ok(cartService.updateProductQuantity(cartId,productId,dto));
     }
 }

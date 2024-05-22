@@ -5,6 +5,7 @@ import com.nashtech.rookie.yasa.dto.request.UpdateRatingDto;
 import com.nashtech.rookie.yasa.dto.response.RatingDto;
 import com.nashtech.rookie.yasa.entity.Rating;
 import com.nashtech.rookie.yasa.service.rating.RatingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class RatingController {
     private RatingService ratingService;
 
     @PostMapping
-    public RatingDto createRating(@RequestBody CreateRatingDto dto) {
+    public RatingDto createRating(@RequestBody @Valid CreateRatingDto dto) {
       return ratingService.createRating(dto);
     }
 

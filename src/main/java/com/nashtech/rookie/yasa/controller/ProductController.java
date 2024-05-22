@@ -4,6 +4,7 @@ import com.nashtech.rookie.yasa.dto.request.CreateProductDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateProductDto;
 import com.nashtech.rookie.yasa.dto.response.ProductDto;
 import com.nashtech.rookie.yasa.service.product.ProductService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id")  @Min(value = 1, message = "invalid product id")int id,@RequestBody UpdateProductDto product) {
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id")  @Min(value = 1, message = "invalid product id")int id,@RequestBody @Valid UpdateProductDto product) {
         return ResponseEntity.ok(productService.updateProduct(id, product));
     }
 

@@ -32,7 +32,7 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     private Set<CartDetail> products = new HashSet<CartDetail>();
 
-    public void addQuantity(int quantity) {
-        this.total+=quantity;
-    }
+//  //  public void addQuantity(int quantity) {
+//        this.total+=quantity;
+//    }
 }

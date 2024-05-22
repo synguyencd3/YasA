@@ -6,6 +6,7 @@ import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.entity.Order;
 import com.nashtech.rookie.yasa.entity.OrderDetail;
 import com.nashtech.rookie.yasa.exceptions.CartNotFoundException;
+import com.nashtech.rookie.yasa.exceptions.OrderNotFoundException;
 import com.nashtech.rookie.yasa.mapper.CartToOrderMapper;
 import com.nashtech.rookie.yasa.mapper.OrderMapper;
 import com.nashtech.rookie.yasa.repository.CartDetailRepository;
@@ -60,5 +61,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getAll() {
         return orderRepository.findAll().stream().map(OrderMapper.INSTANCE::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderDto getOrder(int orderId) {
+        return orderRepository.findById(orderId).map(OrderMapper.INSTANCE::toDto).orElseThrow(OrderNotFoundException::new);
     }
 }

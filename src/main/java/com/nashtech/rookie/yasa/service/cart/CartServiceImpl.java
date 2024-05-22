@@ -48,10 +48,10 @@ public class CartServiceImpl implements CartService {
         CartDetailKey key = new CartDetailKey();
         key.setCartId(cart.getId());
         key.setProductId(product.getId());
-        Optional<CartDetail> existed = cartDetailRepository.findById(key);
 
 
-        if (existed.isEmpty())
+        Optional<CartDetail> isExisted = cartDetailRepository.findById(key);
+        if (isExisted.isEmpty())
         {
             cartDetail.setId(key);
             cartDetail.setCart(cart);
@@ -60,14 +60,17 @@ public class CartServiceImpl implements CartService {
             cartDetailRepository.save(cartDetail);
         } else
         {
-            CartDetail existedCart = existed.get();
-            existedCart.addQuantity(cartItem.getQuantity());
+            CartDetail existedCart = isExisted.get();
+            //existedCart.addQuantity(cartItem.getQuantity());
+            addQuantity(existedCart, cartItem.getQuantity());
             cart.getProducts().add(existedCart);
             cartDetailRepository.save(existedCart);
         }
-
-
         return CartMapper.INSTANCE.toDto(cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new));
+    }
+
+    private void addQuantity(CartDetail target, int quantity) {
+        target.setQuantity(target.getQuantity()+quantity);
     }
 
     @Override
