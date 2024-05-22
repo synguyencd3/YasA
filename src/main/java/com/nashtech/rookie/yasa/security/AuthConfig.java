@@ -70,8 +70,9 @@ public class AuthConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/swagger-ui.html").permitAll()
-                        .requestMatchers("api/*").permitAll()
+                      //  .requestMatchers("/swagger-ui.html").permitAll()
+                      //  .requestMatchers("api/*").permitAll()
+                        .requestMatchers("api/auth").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

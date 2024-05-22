@@ -20,7 +20,7 @@ public class JWTService {
     private static final String ISSUER = "KurgerBing";
     private static final String SUBJECT = "Users Details";
 
-    private static final int expireInMs = 60 * 1000;
+    private static final int expireInMs = 3600 * 1000;
 
     private static Algorithm algorithm = Algorithm.HMAC256(SECRET);
     private static JWTVerifier verifier = JWT.require(algorithm)
@@ -89,9 +89,6 @@ public class JWTService {
 
     public static void main(String[] args)
     {
-        User user = new User();
-        user.setUsername("test jwt");
-        user.setName("nguyen");
-        System.out.println(getUsername(createJWT(user)));
+        System.out.println(validate("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VycyBEZXRhaWxzIiwicm9sZSI6InVzZXIiLCJpc3MiOiJLdXJnZXJCaW5nIiwibmFtZSI6Im5ndXllbiIsImV4cCI6MTcxNjM3ODQ2OSwiaWF0IjoxNzE2Mzc0ODY5LCJqdGkiOiI0NzNhZTE0My1iYjFlLTRmZjAtYWQyNi0yOTFiNzZmZWE0YzYiLCJ1c2VybmFtZSI6InN5bmd1eWVuY2QyIn0.rlm_kwXAnK8hUCaoOu9tWLa7BbDlpVQh7MfZguloXXs"));
     }
 }
