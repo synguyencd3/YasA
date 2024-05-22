@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserNotFoundException extends RuntimeException{
-    private String message = "User not found";
+public class EmptyCartException extends RuntimeException{
+    private String message = "Cart is empty";
 }

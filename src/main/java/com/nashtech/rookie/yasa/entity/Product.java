@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,8 +33,12 @@ public class Product {
     @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "product")
+//    @JsonIgnore
+//    private List<Rating> rating;
+
+    @OneToMany(mappedBy = "product")
     @JsonIgnore
-    private List<Rating> rating;
+    Set<CartDetail> cart = new HashSet<CartDetail>();
 
 }

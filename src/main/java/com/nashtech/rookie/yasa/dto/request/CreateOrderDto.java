@@ -4,13 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class RegisterDto {
+@Setter
+public class CreateOrderDto {
     @NotBlank(message = "name is required")
     private String name;
-    @NotBlank(message = "name is required")
-    private String username;
-    @NotBlank(message = "password is required")
-    private String password;
+    private String address;
+    private String phone;
 }
