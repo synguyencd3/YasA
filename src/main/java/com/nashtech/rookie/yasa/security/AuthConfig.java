@@ -1,4 +1,6 @@
 package com.nashtech.rookie.yasa.security;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -17,6 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 public class AuthConfig {
+
+    @Autowired
+    @Qualifier("delegatedAuthenticationEntryPoint")
+    AuthenticationEntryPoint authEntryPoint;
+
 
     private static final String[] AUTH_WHITELIST = {
             "/api/v1/auth/**",
@@ -46,10 +54,10 @@ public class AuthConfig {
                                 "api/products/*",
                                 "api/categories/*",
                                 "api/categories",
-                                "/error"}).permitAll()
+                                 "/error"}).permitAll()
                         .requestMatchers("api/auth").permitAll()
-
                         .anyRequest().authenticated())
+                //.exceptionHandling((exception)->exception.authenticationEntryPoint(authEntryPoint))
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

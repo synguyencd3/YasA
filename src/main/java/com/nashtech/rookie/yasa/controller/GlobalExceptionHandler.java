@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -17,8 +18,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 ProductNotFoundException.class,
                 RatingNotFoundException.class,
                 UserNotFoundException.class,
-                CartNotFoundException.class
+                CartNotFoundException.class,
+                CategoryNotFoundException.class,
+                OrderNotFoundException.class,
         })
+        @ResponseBody
         ResponseEntity<ErrorResponse> handleResourceNotFoundException(
             RuntimeException exception, WebRequest request) {
         var error = ErrorResponse.builder().code(HttpStatus.NOT_FOUND.value())
