@@ -19,7 +19,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 UserNotFoundException.class,
                 CartNotFoundException.class
         })
-    protected ResponseEntity<ErrorResponse> handleResourceNotFoundException(
+        ResponseEntity<ErrorResponse> handleResourceNotFoundException(
             RuntimeException exception, WebRequest request) {
         var error = ErrorResponse.builder().code(HttpStatus.NOT_FOUND.value())
                 .message(exception.getMessage()).build();
