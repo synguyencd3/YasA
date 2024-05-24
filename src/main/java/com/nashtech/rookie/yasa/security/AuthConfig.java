@@ -51,9 +51,11 @@ public class AuthConfig {
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers(HttpMethod.GET, new String[]{
                                 "api/products",
-                                "api/products/*",
-                                "api/categories/*",
+                                "api/products/**",
+                                "api/categories/**",
                                 "api/categories",
+                                "api/ratings/",
+                                "api/ratings/**",
                                  "/error"}).permitAll()
                         .requestMatchers("api/auth").permitAll()
                         .anyRequest().authenticated())
@@ -67,6 +69,4 @@ public class AuthConfig {
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
 }

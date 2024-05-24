@@ -26,18 +26,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public CategoryDto getCategory(int id) {
-        Optional<Category> category  = categoryRepository.findById(id);
-
-        System.out.println("run here");
-        if (category.isPresent())
-        {
-            return CategoryMapper.INSTANCE.toDto(category.get());
-        }
-        else
-        {
-            throw new CategoryNotFoundException();
-        }
-        //return categoryRepository.findById(id).map(CategoryMapper.INSTANCE::toDto).orElseThrow(CategoryNotFoundException::new);
+        return categoryRepository.findById(id).map(CategoryMapper.INSTANCE::toDto).orElseThrow(CategoryNotFoundException::new);
     }
 
     @Override
