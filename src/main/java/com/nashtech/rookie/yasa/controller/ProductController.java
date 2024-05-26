@@ -18,6 +18,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping()
+    @CrossOrigin
     public ResponseEntity<List<ProductDto>> getAll(@RequestParam(required = false, name="category") Integer category) {
         if (category!= null)
             return ResponseEntity.ok(productService.getAllInCategory(category));
