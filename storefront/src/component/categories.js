@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 
-const CategoriesList = () => {
+const CategoriesList = ({selectCategory}) => {
     const [categories, setCategories] = useState(null);
 
     useEffect(()=>{
@@ -12,12 +12,14 @@ const CategoriesList = () => {
             setCategories(data)
         })
     }, [])
+
+
     return (
-        <ol class="list-group list-group-numbered">
+        <ol className="list-group list-group-numbered">
             {categories && categories.map((category) =>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto" key={category.id}>
-                    <div class="fw-bold">{category.name}</div>
+            <li className="list-group-item d-flex justify-content-between align-items-start" key={category.id} onClick={() =>{selectCategory(category)}}>
+                <div className="ms-2 me-auto">
+                    <div className="fw-bold">{category.name}</div>
                     {category.description} 
                 </div>
             </li>
