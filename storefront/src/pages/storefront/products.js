@@ -1,4 +1,3 @@
-import { useEffect, useState} from "react";
 
 const ProductsList = ({products}) => {
 
@@ -10,11 +9,11 @@ const ProductsList = ({products}) => {
                     {products && products.map((product) =>
                          <div className="col-4" key={product.id}>
                          <div className="p-5">
-                             <div class="card product-item">
-                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaBqXPJxDAvLfz-d0uNwJtxUSGKexAZfWzkknNlUdU0A&s" class="card-img-top" alt="..."/>
+                             <div className="card product-item">
+                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaBqXPJxDAvLfz-d0uNwJtxUSGKexAZfWzkknNlUdU0A&s" className="card-img-top" alt="..."/>
                                  <div className="card-body">
                                  <div className="text-center">
-                                     <a href="#"><h5 class="card-title">{product.name}</h5></a>
+                                     <a href={`products/${product.id}`}><h5 className="card-title">{product.name}</h5></a>
                                      <p className="card-text">{product.description}</p>
                                      <p><b>{product.price}</b>VND</p>
                                  </div>

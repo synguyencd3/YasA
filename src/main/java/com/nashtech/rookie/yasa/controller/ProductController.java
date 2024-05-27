@@ -33,6 +33,7 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.FOUND)
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") @Min(value = 1, message = "invalid product id") int id) {
 

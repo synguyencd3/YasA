@@ -28,6 +28,12 @@
   color: white;
 }
 
+.product-description{
+  height:150px; 
+  min-height:200px;  
+  max-height:200px;
+}
+
 .App-link {
   color: #61dafb;
 }
