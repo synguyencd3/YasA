@@ -86,9 +86,5 @@ public class JWTService {
         return decodedJWT(token).getClaim("username").asString();
     }
     public static String getRole(String token) {return decodedJWT(token).getClaim("role").asString();}
-
-    public static void main(String[] args)
-    {
-        System.out.println(validate("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VycyBEZXRhaWxzIiwicm9sZSI6InVzZXIiLCJpc3MiOiJLdXJnZXJCaW5nIiwibmFtZSI6Im5ndXllbiIsImV4cCI6MTcxNjM3ODQ2OSwiaWF0IjoxNzE2Mzc0ODY5LCJqdGkiOiI0NzNhZTE0My1iYjFlLTRmZjAtYWQyNi0yOTFiNzZmZWE0YzYiLCJ1c2VybmFtZSI6InN5bmd1eWVuY2QyIn0.rlm_kwXAnK8hUCaoOu9tWLa7BbDlpVQh7MfZguloXXs"));
-    }
+    
 }

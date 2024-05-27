@@ -4,9 +4,7 @@ import com.nashtech.rookie.yasa.dto.request.CreateRatingDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateRatingDto;
 import com.nashtech.rookie.yasa.dto.response.RatingDto;
 import com.nashtech.rookie.yasa.entity.Rating;
-import com.nashtech.rookie.yasa.exceptions.ProductNotFoundException;
-import com.nashtech.rookie.yasa.exceptions.RatingNotFoundException;
-import com.nashtech.rookie.yasa.mapper.ProductMapper;
+import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.RatingMapper;
 import com.nashtech.rookie.yasa.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +48,7 @@ public class RatingServiceImpl implements RatingService{
 
     @Override
     public RatingDto getRating(int ratingId) {
-
-        return ratingRepository.findById(ratingId).map(RatingMapper.INSTANCE::toDto).orElseThrow(RatingNotFoundException::new);
+        return ratingRepository.findById(ratingId).map(RatingMapper.INSTANCE::toDto).orElseThrow(() -> new NotFoundException("Rating not found"));
     }
 
     @Override
@@ -60,7 +57,7 @@ public class RatingServiceImpl implements RatingService{
             var updatedRating = RatingMapper.INSTANCE.updateEntity(rating,dto);
             updatedRating = ratingRepository.save(updatedRating);
             return RatingMapper.INSTANCE.toDto(updatedRating);
-        }).orElseThrow(ProductNotFoundException::new);
+        }).orElseThrow(() -> new NotFoundException("Product or rating not found"));
     }
 
     @Override
