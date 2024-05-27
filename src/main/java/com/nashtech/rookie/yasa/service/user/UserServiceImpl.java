@@ -5,11 +5,14 @@ import com.nashtech.rookie.yasa.dto.response.UserDto;
 import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.entity.User;
 import com.nashtech.rookie.yasa.exceptions.CantLoginException;
+import com.nashtech.rookie.yasa.exceptions.UserExistException;
 import com.nashtech.rookie.yasa.mapper.UserMapper;
 import com.nashtech.rookie.yasa.repository.UserRepository;
 import com.nashtech.rookie.yasa.service.cart.CartService;
+import com.nashtech.rookie.yasa.util.JWTService;
 import com.nashtech.rookie.yasa.util.SHA521Hasher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -20,6 +23,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     public UserDto register(RegisterDto dto) {
@@ -36,8 +42,12 @@ public class UserServiceImpl implements UserService {
         user.setSecret(hashedPassword);
         user.setCart(cartService.createCart(user));
 
-        user =userRepository.save(user);
-
+        try {
+            user = userRepository.save(user);
+        }
+        catch (Exception e) {
+            throw new UserExistException();
+        }
         return UserMapper.INSTANCE.toDto(user);
     }
 
@@ -45,8 +55,11 @@ public class UserServiceImpl implements UserService {
     public UserDto login(LoginDto dto) {
         User user = userRepository.findByUsername(dto.getUsername());
         byte[] salt = Base64.getDecoder().decode(user.getSalt());
-        if (SHA521Hasher.checkPassword(user.getSecret(),dto.getPassword(), salt))
-            return UserMapper.INSTANCE.toDto(user);
+        if (SHA521Hasher.checkPassword(user.getSecret(),dto.getPassword(), salt)) {
+            UserDto responseDto = UserMapper.INSTANCE.toDto(user);
+            responseDto.setAccessKey(JWTService.createJWT(user));
+            return responseDto;
+        }
         else
             throw  new CantLoginException();
     }
