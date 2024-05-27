@@ -16,12 +16,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         @ExceptionHandler({
                 NotFoundException.class,
-                ProductNotFoundException.class,
-                RatingNotFoundException.class,
-                UserNotFoundException.class,
-                CartNotFoundException.class,
-                CategoryNotFoundException.class,
-                OrderNotFoundException.class,
         })
         @ResponseBody
         ResponseEntity<ErrorResponse> handleResourceNotFoundException(RuntimeException exception, WebRequest request) {
