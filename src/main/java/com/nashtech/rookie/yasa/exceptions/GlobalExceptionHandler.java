@@ -1,4 +1,4 @@
-package com.nashtech.rookie.yasa.controller;
+package com.nashtech.rookie.yasa.exceptions;
 
 import com.nashtech.rookie.yasa.dto.response.ErrorResponse;
 import com.nashtech.rookie.yasa.exceptions.*;
@@ -16,12 +16,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         @ExceptionHandler({
                 NotFoundException.class,
-                ProductNotFoundException.class,
-                RatingNotFoundException.class,
-                UserNotFoundException.class,
-                CartNotFoundException.class,
-                CategoryNotFoundException.class,
-                OrderNotFoundException.class,
         })
         @ResponseBody
         ResponseEntity<ErrorResponse> handleResourceNotFoundException(RuntimeException exception, WebRequest request) {

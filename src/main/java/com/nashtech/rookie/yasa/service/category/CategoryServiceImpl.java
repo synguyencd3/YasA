@@ -3,16 +3,13 @@ package com.nashtech.rookie.yasa.service.category;
 import com.nashtech.rookie.yasa.dto.request.CreateCategoryDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateCategoryDto;
 import com.nashtech.rookie.yasa.dto.response.CategoryDto;
-import com.nashtech.rookie.yasa.entity.Category;
-import com.nashtech.rookie.yasa.entity.Product;
-import com.nashtech.rookie.yasa.exceptions.CategoryNotFoundException;
+import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.CategoryMapper;
 import com.nashtech.rookie.yasa.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public CategoryDto getCategory(int id) {
-        return categoryRepository.findById(id).map(CategoryMapper.INSTANCE::toDto).orElseThrow(CategoryNotFoundException::new);
+        return categoryRepository.findById(id).map(CategoryMapper.INSTANCE::toDto).orElseThrow(() -> new NotFoundException("Category not found"));
     }
 
     @Override
@@ -42,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService{
             var updatedCategory = CategoryMapper.INSTANCE.updateEntity(category, dto);
             updatedCategory = categoryRepository.save(updatedCategory);
             return CategoryMapper.INSTANCE.toDto(updatedCategory);
-        }).orElseThrow(CategoryNotFoundException::new);
+        }).orElseThrow(() -> new NotFoundException("Category not found"));
     }
 
     @Override

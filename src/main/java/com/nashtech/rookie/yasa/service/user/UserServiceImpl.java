@@ -11,6 +11,8 @@ import com.nashtech.rookie.yasa.repository.UserRepository;
 import com.nashtech.rookie.yasa.service.cart.CartService;
 import com.nashtech.rookie.yasa.util.JWTService;
 import com.nashtech.rookie.yasa.util.SHA521Hasher;
+import jakarta.persistence.PersistenceException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
@@ -45,8 +47,9 @@ public class UserServiceImpl implements UserService {
         try {
             user = userRepository.save(user);
         }
-        catch (Exception e) {
-            throw new UserExistException();
+        catch (PersistenceException e) {
+            if (e.getCause() instanceof ConstraintViolationException)
+                throw new UserExistException();
         }
         return UserMapper.INSTANCE.toDto(user);
     }

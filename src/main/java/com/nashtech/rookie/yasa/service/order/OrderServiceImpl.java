@@ -5,8 +5,7 @@ import com.nashtech.rookie.yasa.dto.response.OrderDto;
 import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.entity.Order;
 import com.nashtech.rookie.yasa.entity.OrderDetail;
-import com.nashtech.rookie.yasa.exceptions.CartNotFoundException;
-import com.nashtech.rookie.yasa.exceptions.OrderNotFoundException;
+import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.CartToOrderMapper;
 import com.nashtech.rookie.yasa.mapper.OrderMapper;
 import com.nashtech.rookie.yasa.repository.CartDetailRepository;
@@ -37,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto createOrder(int cartId, CreateOrderDto dto) {
 
 
-        Cart cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("Cart not found"));
         Order order = OrderMapper.INSTANCE.toEntity(dto);//new Order();
         order.setUser(cart.getUser());
 
@@ -65,6 +64,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto getOrder(int orderId) {
-        return orderRepository.findById(orderId).map(OrderMapper.INSTANCE::toDto).orElseThrow(OrderNotFoundException::new);
+        return orderRepository.findById(orderId).map(OrderMapper.INSTANCE::toDto).orElseThrow(() -> new NotFoundException("Order not found"));
     }
 }
