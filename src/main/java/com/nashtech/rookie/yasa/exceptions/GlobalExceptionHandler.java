@@ -1,4 +1,4 @@
-package com.nashtech.rookie.yasa.controller;
+package com.nashtech.rookie.yasa.exceptions;
 
 import com.nashtech.rookie.yasa.dto.response.ErrorResponse;
 import com.nashtech.rookie.yasa.exceptions.*;
