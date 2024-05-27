@@ -26,6 +26,9 @@ public class Product {
     private String description;
     private String image;
 
+    @Column(name="is_featured", nullable = false)
+    private boolean isFeatured = false;
+
 //    @Column(name="average_rating")
 //    private float rating;
 

@@ -18,6 +18,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping()
+    @CrossOrigin
     public ResponseEntity<List<ProductDto>> getAll(@RequestParam(required = false, name="category") Integer category) {
         if (category!= null)
             return ResponseEntity.ok(productService.getAllInCategory(category));
@@ -32,6 +33,7 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.FOUND)
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") @Min(value = 1, message = "invalid product id") int id) {
 

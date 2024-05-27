@@ -57,7 +57,7 @@ public class AuthConfig {
                                 "api/ratings/",
                                 "api/ratings/**",
                                  "/error"}).permitAll()
-                        .requestMatchers("api/auth").permitAll()
+                        .requestMatchers(HttpMethod.POST,"api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 //.exceptionHandling((exception)->exception.authenticationEntryPoint(authEntryPoint))
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)

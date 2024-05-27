@@ -17,6 +17,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     @GetMapping(value ={"","/"})
+    @CrossOrigin
     public ResponseEntity<List<CategoryDto>> getAll() {
         return ResponseEntity.ok(categoryService.getAll());
     }
