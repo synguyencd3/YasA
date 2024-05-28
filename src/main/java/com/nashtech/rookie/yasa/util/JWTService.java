@@ -33,6 +33,8 @@ public class JWTService {
                 .withSubject(SUBJECT)
                 .withIssuer(ISSUER)
                 .withClaim("username", user.getUsername())
+                .withClaim("userId", user.getId())
+                .withClaim("cartId", user.getCart().getId())
                 .withClaim("name", user.getName())
                 .withClaim("role", user.getRole())
                 .withIssuedAt(new Date())
@@ -86,5 +88,6 @@ public class JWTService {
         return decodedJWT(token).getClaim("username").asString();
     }
     public static String getRole(String token) {return decodedJWT(token).getClaim("role").asString();}
+    public static int getCart(String token) {return decodedJWT(token).getClaim("cartId").asInt();}
     
 }

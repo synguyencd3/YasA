@@ -16,5 +16,6 @@ public class UpdateProductDto {
     private String description;
     private String image;
     private Category category;
+    private boolean isFeatured;
 
 }

@@ -24,9 +24,19 @@ public class CartController {
         return ResponseEntity.ok(cartService.getCart(cartId));
     }
 
+    @GetMapping()
+    public ResponseEntity<CartDto> getCart(@RequestHeader("Authorization") String bearerToken) {
+        return ResponseEntity.ok(cartService.getCart(bearerToken));
+    }
+
     @PostMapping("/{cartId}")
     public ResponseEntity<CartDto> addProductToCart(@PathVariable int cartId, @RequestBody @Valid CartItemDto cartItemDto) {
         return ResponseEntity.ok(cartService.addToCart(cartId, cartItemDto));
+    }
+
+    @PostMapping()
+    public ResponseEntity<CartDto> addProductToCart(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid CartItemDto cartItemDto) {
+        return ResponseEntity.ok(cartService.addToCart(bearerToken, cartItemDto));
     }
 
     @DeleteMapping("/{cartId}/products/{productId}")

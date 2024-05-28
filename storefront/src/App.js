@@ -1,5 +1,4 @@
 import './App.css';
-import Carousel from './component/carousel';
 import Navbar from './component/navbar';
 import Login from './pages/login/login';
 import ProductDetail from './pages/product detail/productDetail';
@@ -29,7 +28,7 @@ function App() {
               <Route path="/products/:id" element={<ProductDetail></ProductDetail>}></Route>
             </Routes>
             <Routes>
-              <Route path="/" element={<><Carousel /><Storefront /></>}>
+              <Route path="/" element={<><Storefront /></>}>
               </Route>
             </Routes>
             </div>

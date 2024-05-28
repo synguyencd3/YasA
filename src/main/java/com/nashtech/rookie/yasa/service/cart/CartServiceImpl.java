@@ -10,6 +10,7 @@ import com.nashtech.rookie.yasa.mapper.CartMapper;
 import com.nashtech.rookie.yasa.repository.CartDetailRepository;
 import com.nashtech.rookie.yasa.repository.CartRepository;
 import com.nashtech.rookie.yasa.repository.ProductRepository;
+import com.nashtech.rookie.yasa.util.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,13 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto getCart(int id){
         return cartRepository.findById(id).map(CartMapper.INSTANCE::toDto).orElseThrow(() -> new NotFoundException("Cart not found"));
+    }
+
+    @Override
+    public CartDto getCart(String bearerToken) {
+        String token = bearerToken.replace("Bearer ", "");
+        int cartId = JWTService.getCart(token);
+        return cartRepository.findById(cartId).map(CartMapper.INSTANCE::toDto).orElseThrow(() -> new NotFoundException("Cart not found"));
     }
 
     @Override
@@ -66,6 +74,13 @@ public class CartServiceImpl implements CartService {
             cartDetailRepository.save(existedCart);
         }
         return CartMapper.INSTANCE.toDto(cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("Cart not found")));
+    }
+
+    @Override
+    public CartDto addToCart(String bearerToken, CartItemDto cartItem) {
+        String token = bearerToken.replace("Bearer ", "");
+        int cartId = JWTService.getCart(token);
+        return addToCart(cartId, cartItem);
     }
 
     private void addQuantity(CartDetail target, int quantity) {
