@@ -6,10 +6,15 @@ import ProductDetail from './pages/product detail/productDetail';
 import Storefront from './pages/storefront/storefront';
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { useState, useEffect } from "react"
+import { getToken } from './services/authService';
 
 
 function App() {
-  const [token, setToken] = useState();
+  let [token, setToken] = useState();
+
+  useEffect(()=>{
+    setToken(getToken());
+}, [])
 
   if(!token) {
     return <Login setToken = {setToken}/>

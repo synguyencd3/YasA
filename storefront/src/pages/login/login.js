@@ -1,4 +1,5 @@
 import { useState} from "react"
+import { setTokenToStorage } from "../../services/authService";
 
 async function loginUser(credentials) {
     return fetch('http://localhost:8080/api/auth/login', {
@@ -25,6 +26,7 @@ const Login = ({setToken}) => {
         });
         console.log(token);
         setToken(token.accessKey);
+        setTokenToStorage(token.accessKey);
       }
 
     return(

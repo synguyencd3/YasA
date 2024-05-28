@@ -7,6 +7,7 @@ const Navbar = () => {
           </a>
           <button type="button" id="cartButton" className="btn btn-success mx-5">
             <i className="fa-solid fa-cart-shopping"></i> Cart</button>
+          
         </div>
     </nav>
     );
