@@ -50,15 +50,15 @@ public class AuthConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers(HttpMethod.GET, new String[]{
-                                "api/products",
                                 "api/products/**",
+                                "api/products/",
                                 "api/categories/**",
                                 "api/categories",
-                                "api/ratings/",
                                 "api/ratings/**",
+                                "api/ratings/",
                                  "/error"}).permitAll()
                         .requestMatchers(HttpMethod.POST,"api/auth/**").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

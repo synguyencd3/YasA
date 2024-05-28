@@ -27,6 +27,7 @@ public class RatingController {
     }
 
     @GetMapping
+    @CrossOrigin
     public List<RatingDto> getAll(@RequestParam(name="user", required = false) Integer userId,
                                @RequestParam(name="product", required = false) Integer productId) {
     if (userId != null && productId == null) return ratingService.getByUser(userId);
@@ -36,11 +37,13 @@ public class RatingController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin
     public RatingDto getRating(@PathVariable(name="id") int ratingId){
        return ratingService.getRating(ratingId);
     }
 
     @PutMapping("/{id}")
+    @CrossOrigin
     public RatingDto updateRating(@PathVariable(name="id") int ratingId, UpdateRatingDto rating) {
         return ratingService.updateRating(ratingId, rating);
     }

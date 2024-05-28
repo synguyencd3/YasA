@@ -3,6 +3,7 @@ package com.nashtech.rookie.yasa.service.rating;
 import com.nashtech.rookie.yasa.dto.request.CreateRatingDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateRatingDto;
 import com.nashtech.rookie.yasa.dto.response.RatingDto;
+import com.nashtech.rookie.yasa.entity.Product;
 import com.nashtech.rookie.yasa.entity.Rating;
 import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.RatingMapper;

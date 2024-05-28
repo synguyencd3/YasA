@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class RatingDto {
     private int id;
-    private Product product;
+    //private Product product;
     private int userId;
     private float score;
     private String content;

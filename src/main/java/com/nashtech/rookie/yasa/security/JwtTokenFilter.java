@@ -28,10 +28,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if ( token != null && JWTService.validate(token)) {
             var username = JWTService.getUsername(token);
+            var userRole = JWTService.getRole(token);
             var role = new GrantedAuthority() {
                 @Override
                 public String getAuthority() {
-                    return JWTService.getRole(token);
+                    return userRole;
                 }
             };
             var authentication = new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>() {{ add(role);}});
