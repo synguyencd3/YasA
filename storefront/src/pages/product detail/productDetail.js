@@ -1,23 +1,34 @@
 import { useParams } from 'react-router';
 import { useState, useEffect } from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ProductDetail = () => {
 
     const { id } = useParams();
 
     const [product, setProduct] = useState(null)
+	const [comments, setComments] = useState(null)
 
     const getProduct =() => {
         fetch("http://localhost:8080/api/products/"+id).then(res => {
             return res.json()
         }).then((data) => {
-            console.log(data);
             setProduct(data)
         })
     }
 
+	const getComments = () => {
+		fetch("http://localhost:8080/api/ratings?product="+id).then(res => {
+            return res.json()
+        }).then((data) => {
+            console.log(data);
+            setComments(data)
+        })
+	}
+
     useEffect(()=>{
         getProduct()
+		getComments()
      }, [])
     
     return (
@@ -46,6 +57,16 @@ const ProductDetail = () => {
 				</div>
 			</div>
 		</div>
+		<h3 className="mt-3">Comments</h3>
+		{comments && comments.map((comment) =>
+		<div className="card mt-2">
+		<div className="card-body">
+			<h5 className="card-title">User: {comment.userId}</h5>
+			<h6 className="card-subtitle mb-2 text-muted">score: {comment.score}/5</h6>
+			<p className="card-text">comment: "{comment.content}"</p>
+		</div>
+		</div>
+		)}
 	</div>
     )
 }
