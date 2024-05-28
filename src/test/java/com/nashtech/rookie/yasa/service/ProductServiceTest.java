@@ -102,4 +102,17 @@ public class ProductServiceTest {
         verify(productRepository).findById(product.getId());
     }
 
+    @Test
+    public void whenGivenId_FindProduct() {
+        Product product = new Product();
+        product.setId(1);
+        product.setName("test");
+
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        var Test = productService.getProduct(1);
+
+        assertNotNull(Test);
+        assertThat(Test.getId()).isEqualTo(product.getId());
+    }
+
 }
