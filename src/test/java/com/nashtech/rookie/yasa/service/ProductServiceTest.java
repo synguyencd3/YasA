@@ -2,6 +2,7 @@ package com.nashtech.rookie.yasa.service;
 import com.nashtech.rookie.yasa.dto.request.CreateProductDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateProductDto;
 import com.nashtech.rookie.yasa.entity.Product;
+import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.ProductMapper;
 import com.nashtech.rookie.yasa.repository.ProductRepository;
 import com.nashtech.rookie.yasa.service.product.ProductServiceImpl;
@@ -72,13 +73,9 @@ public class ProductServiceTest {
         verify(productRepository).deleteById(product.getId());
    }
 
-   @Test
+    @Test(expected = NotFoundException.class)
    public void should_throw_exception_when_product_doesnt_exist() {
-        Product product = new Product();
-        product.setId(1);
-        product.setName("test");
-        when(productRepository.findById(anyInt())).thenReturn(Optional.empty());
-        productService.deleteProduct(product.getId());
+        productService.getProduct(99);
    }
 
     @Test

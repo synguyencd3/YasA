@@ -2,6 +2,7 @@ package com.nashtech.rookie.yasa.service;
 import com.nashtech.rookie.yasa.dto.request.CreateCategoryDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateCategoryDto;
 import com.nashtech.rookie.yasa.entity.Category;
+import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.CategoryMapper;
 import com.nashtech.rookie.yasa.service.category.CategoryServiceImpl;
 import com.nashtech.rookie.yasa.repository.CategoryRepository;
@@ -103,5 +104,19 @@ public class CategoryServiceTest {
 
         assertNotNull(Test);
         assertThat(Test.getId()).isEqualTo(Category.getId());
+    }
+
+    @Test
+    public void should_throw_exception_when_Category_doesnt_exist() {
+        Category Category = new Category();
+        Category.setId(1);
+        Category.setName("test");
+        when(categoryRepository.findById(anyInt())).thenReturn(Optional.empty());
+        categoryService.deleteCategory(Category.getId());
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void should_throw_exception_when_category_doesnt_exist() {
+        categoryService.getCategory(99);
     }
 }
