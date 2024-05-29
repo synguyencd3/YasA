@@ -18,8 +18,11 @@ public class CategoryController {
     private CategoryService categoryService;
     @GetMapping(value ={"","/"})
     @CrossOrigin
-    public ResponseEntity<List<CategoryDto>> getAll() {
-        return ResponseEntity.ok(categoryService.getAll());
+    public ResponseEntity<List<CategoryDto>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        return ResponseEntity.ok(categoryService.getAll(page,size));
     }
 
     @PostMapping()

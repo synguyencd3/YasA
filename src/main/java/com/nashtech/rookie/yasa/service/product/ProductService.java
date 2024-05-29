@@ -15,7 +15,7 @@ public interface ProductService {
 
     public ProductDto getProduct(int id);
 
-    public List<ProductDto> getAllInCategory(int id);
+    public List<ProductDto> getAllInCategory(int id, int page, int size);
 
     public ProductDto updateProduct(int id, UpdateProductDto dto);
 

@@ -40,8 +40,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllInCategory(int id) {
-        return productRepository.findByCategory_Id(id).stream().map(ProductMapper.INSTANCE::toDto).collect(Collectors.toList());
+    public List<ProductDto> getAllInCategory(int id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findByCategory_Id(id, pageable).stream().map(ProductMapper.INSTANCE::toDto).collect(Collectors.toList());
     }
 
 

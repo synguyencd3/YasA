@@ -25,7 +25,7 @@ public class ProductController {
             @RequestParam(defaultValue = "5") int size
     ) {
         if (category!= null)
-            return ResponseEntity.ok(productService.getAllInCategory(category));
+            return ResponseEntity.ok(productService.getAllInCategory(category, page, size));
         return ResponseEntity.ok(productService.getAllProducts(page,size));
     }
 
