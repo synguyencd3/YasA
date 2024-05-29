@@ -14,6 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -56,6 +59,30 @@ public class AuthConfig {
                                 "api/ratings/**",
                                 "api/ratings/",
                                  "/error"}).permitAll()
+                        .requestMatchers(HttpMethod.POST, new String[]{
+                                "api/products/**",
+                                "api/products/",
+                                "api/categories/**",
+                                "api/categories",
+                                "api/ratings/**",
+                                "api/ratings/",
+                                "/error"}).authenticated()
+                        .requestMatchers(HttpMethod.PUT, new String[]{
+                                "api/products/**",
+                                "api/products/",
+                                "api/categories/**",
+                                "api/categories",
+                                "api/ratings/**",
+                                "api/ratings/",
+                                "/error"}).authenticated()
+                        .requestMatchers(HttpMethod.DELETE, new String[]{
+                                "api/products/**",
+                                "api/products/",
+                                "api/categories/**",
+                                "api/categories",
+                                "api/ratings/**",
+                                "api/ratings/",
+                                "/error"}).permitAll()
                         .requestMatchers(HttpMethod.POST,"api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)

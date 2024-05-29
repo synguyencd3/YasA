@@ -44,7 +44,7 @@ public class RatingController {
 
     @PutMapping("/{id}")
     @CrossOrigin
-    public RatingDto updateRating(@PathVariable(name="id") int ratingId, UpdateRatingDto rating) {
+    public RatingDto updateRating(@PathVariable(name="id") int ratingId,@RequestBody UpdateRatingDto rating) {
         return ratingService.updateRating(ratingId, rating);
     }
 
