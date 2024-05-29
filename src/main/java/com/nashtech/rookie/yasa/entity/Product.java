@@ -16,10 +16,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Product extends Audit{
     @Column(nullable = false)
     private String name;
     private int price;

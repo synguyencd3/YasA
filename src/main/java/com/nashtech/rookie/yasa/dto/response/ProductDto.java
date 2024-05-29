@@ -5,6 +5,7 @@ import com.nashtech.rookie.yasa.entity.Rating;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,4 +18,6 @@ public class ProductDto {
     private String image;
     private Category category;
     private boolean isFeatured;
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
 }
