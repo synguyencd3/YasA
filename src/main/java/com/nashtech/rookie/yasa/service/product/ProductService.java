@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    public List<ProductDto> getAllProducts();
+    public List<ProductDto> getAllProducts(int page, int size);
     public ProductDto createProduct(CreateProductDto dto);
 
     public ProductDto getProduct(int id);

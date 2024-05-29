@@ -19,10 +19,14 @@ public class ProductController {
     private ProductService productService;
     @GetMapping()
     @CrossOrigin
-    public ResponseEntity<List<ProductDto>> getAll(@RequestParam(required = false, name="category") Integer category) {
+    public ResponseEntity<List<ProductDto>> getAll(
+            @RequestParam(required = false, name="category") Integer category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
         if (category!= null)
             return ResponseEntity.ok(productService.getAllInCategory(category));
-        return ResponseEntity.ok(productService.getAllProducts());
+        return ResponseEntity.ok(productService.getAllProducts(page,size));
     }
 
     @PostMapping
