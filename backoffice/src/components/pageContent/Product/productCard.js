@@ -1,7 +1,11 @@
-const ProductCard = ({product}) => {
+import { productUrl } from "../../../static/const";
 
-    handleDelete = () => {
-      
+const ProductCard = ({product, fetchFunc}) => {
+
+    const handleDelete = (id) => {
+      fetch(productUrl+`/${id}`, { method: 'DELETE' }).then(
+        () =>fetchFunc()
+      )
     }
 
     return (
@@ -28,7 +32,7 @@ const ProductCard = ({product}) => {
         </div>
       </div>
       <a href="#" className="btn btn-primary mx-1">Edit</a>
-      <a href="#" className="btn btn-danger mx-1">Delete</a>
+      <a href="#" className="btn btn-danger mx-1" onClick={() =>handleDelete(product.id)}>Delete</a>
     </div>
   </div>)
 }

@@ -53,7 +53,7 @@ const List = ({Card, url}) => {
           </div>
           {contents && contents.map((content) =>
           <div key = {content.id}>
-            <Card product={content}/> 
+            <Card product={content} fetchFunc={fetchItem}/> 
           </div>
           )}
   
