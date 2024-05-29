@@ -1,10 +1,15 @@
-import { Space} from 'antd';
 import './App.css';
 import Header from './components/header/header';
 import Sidemenu from './components/sideMenu/sideMenu';
-import Content from './components/pageContent/content';
+import ProductCard from './components/pageContent/Product/productCard';
+import List from './components/pageContent/List';
+import { useState } from 'react';
 
 function App() {
+
+  let card = ProductCard
+  let url =""
+
   return (
     <div className="App">
       <Header/>
@@ -14,7 +19,7 @@ function App() {
               <Sidemenu/>
             </div>
             <div className="col-9 gx-5">
-              <Content/>
+              <List Card={card} url={url}/>
               </div>
         </div>
       </div>
