@@ -18,7 +18,7 @@ const List = ({Card, url}) => {
 
     const fetchItem = () => {
         console.log("page "+page)
-        fetch(`http://localhost:8080/api/products?size=4&page=${page}`).then(res => {
+        fetch(url+`?size=4&page=${page}`).then(res => {
           return res.json()
       }).then((data) => {
           console.log(data)
@@ -53,7 +53,7 @@ const List = ({Card, url}) => {
           </div>
           {contents && contents.map((content) =>
           <div key = {content.id}>
-            <Card product={content} fetchFunc={fetchItem}/> 
+            <Card content={content} fetchFunc={fetchItem}/> 
           </div>
           )}
   

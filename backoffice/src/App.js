@@ -6,11 +6,13 @@ import List from './components/pageContent/List';
 import { useState, useEffect } from 'react';
 import Login from './login/login';
 import { getToken } from './services/authService';
+import CategoryCard from './components/pageContent/Category/CategoryCard';
+import { categoryUrl, productUrl } from './static/const';
 
 function App() {
 
   let card = ProductCard
-  let url =""
+  let url = productUrl
 
   let [token, setToken] = useState();
 

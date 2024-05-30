@@ -1,9 +1,23 @@
-const CategoryCard = ({category}) => {
+import { categoryUrl } from "../../../static/const";
+import { getToken } from "../../../services/authService";
+
+const CategoryCard = ({content, fetchFunc}) => {
+
+  const handleDelete = (id) => {
+    fetch(categoryUrl+`/${id}`, { 
+      method: 'DELETE' ,
+      headers: {Authorization: `Bearer ${getToken()}`}
+    }).then(
+      () =>fetchFunc()
+    )
+  }
+
     return (
         <div className="card mt-4 mx-3">
     <div className="card-body">
       <div className="card-title">
         <div className ="row">
+            <div className="col-1"><h6>ID</h6></div>
             <div className="col"><h6>Category</h6></div>
             <div className="col"><h6>Description</h6></div>
             <div className="col h6">Created On</div>
@@ -12,14 +26,15 @@ const CategoryCard = ({category}) => {
       </div>
       <div className="card-text">
       <div className ="row">
-            <div className="col">{category.name}</div>
-            <div className="col">{category.description}</div>
-            <div className="col">{Date(category.createdOn).slice(0, 24)}</div>
-            <div className="col">{Date(category.updatedOn).slice(0, 24)}</div>
+            <div className="col-1">{content.id}</div>
+            <div className="col">{content.name}</div>
+            <div className="col">{content.description}</div>
+            <div className="col">{Date(content.createdOn).slice(0, 24)}</div>
+            <div className="col">{Date(content.updatedOn).slice(0, 24)}</div>
         </div>
       </div>
       <a href="#" className="btn btn-primary mx-1">Edit</a>
-      <a href="#" className="btn btn-danger mx-1">Delete</a>
+      <a href="#" className="btn btn-danger mx-1" onClick={() => handleDelete(content.id)}>Delete</a>
     </div>
   </div>
     )

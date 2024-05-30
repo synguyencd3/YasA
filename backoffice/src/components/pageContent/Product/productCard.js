@@ -1,9 +1,13 @@
+import { getToken } from "../../../services/authService";
 import { productUrl } from "../../../static/const";
 
-const ProductCard = ({product, fetchFunc}) => {
+const ProductCard = ({content, fetchFunc}) => {
 
     const handleDelete = (id) => {
-      fetch(productUrl+`/${id}`, { method: 'DELETE' }).then(
+      fetch(productUrl+`/${id}`, { 
+        method: 'DELETE',
+        headers: {Authorization: `Bearer ${getToken()}`}
+       } ).then(
         () =>fetchFunc()
       )
     }
@@ -23,16 +27,16 @@ const ProductCard = ({product, fetchFunc}) => {
       </div>
       <div className="card-text">
       <div className ="row">
-            <div className="col-1">{product.id}</div>
-            <div className="col">{product.name}</div>
-            <div className="col">{product.description}</div>
-            <div className="col">{product.category.name}</div>
-            <div className="col">{Date(product.createdOn).slice(0, 24)}</div>
-            <div className="col">{Date(product.updatedOn).slice(0, 24)}</div>
+            <div className="col-1">{content.id}</div>
+            <div className="col">{content.name}</div>
+            <div className="col">{content.description}</div>
+            <div className="col">{content.category.name}</div>
+            <div className="col">{Date(content.createdOn).slice(0, 24)}</div>
+            <div className="col">{Date(content.updatedOn).slice(0, 24)}</div>
         </div>
       </div>
       <a href="#" className="btn btn-primary mx-1">Edit</a>
-      <a href="#" className="btn btn-danger mx-1" onClick={() =>handleDelete(product.id)}>Delete</a>
+      <a href="#" className="btn btn-danger mx-1" onClick={() =>handleDelete(content.id)}>Delete</a>
     </div>
   </div>)
 }
