@@ -47,7 +47,7 @@ const NewProductForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="container mt-5">
-      <div className="form-group">
+      <div className="form-group m-3">
         <label htmlFor="productName">Product Name:</label>
         <input
           type="text"

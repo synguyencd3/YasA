@@ -24,9 +24,7 @@ function App() {
     url: categoryUrl,
     form: NewCategoryForm
   }
-
   
-
   let [token, setToken] = useState();
 
   useEffect(()=>{

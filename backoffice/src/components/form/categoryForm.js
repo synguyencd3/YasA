@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { categoryUrl } from '../../static/const';
+import { getToken } from '../../services/authService';
 
-const NewCategoryForm = () => {
+const NewCategoryForm = ({fetchFunc, toggleFunc}) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
@@ -10,7 +12,25 @@ const NewCategoryForm = () => {
     const categoryData = { name, description };
     console.log('Category created:', categoryData);
     // Handle form submission, e.g., send data to an API or display it
+    PostItem(categoryData)
+    toggleFunc()
   };
+
+  const PostItem = (data) => {
+    fetch(categoryUrl,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      }
+    ).then(res => {
+      console.log("created")
+      fetchFunc()
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit} className="container mt-5">

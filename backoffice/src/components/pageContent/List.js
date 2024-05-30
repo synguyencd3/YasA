@@ -6,7 +6,7 @@ const List = ({Card, url, Form}) => {
     const [showForm, setShowForm] = useState(false);
 
     const handleButtonClick = () => {
-      setShowForm(true);
+      setShowForm(prev => !prev);
     };
 
     let [contents, setContents] = useState(null);
@@ -39,7 +39,7 @@ const List = ({Card, url, Form}) => {
   
       return( 
       <div>
-         {showForm && <Form />}
+         {showForm && <Form fetchFunc={fetchItem} toggleFunc={handleButtonClick}/>}
         <button type="button" className="btn btn-success mb-4" onClick={handleButtonClick}>Add</button>
         <div className="Paging mx-4 mt-2">
             <nav aria-label="Page navigation example">
