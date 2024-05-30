@@ -33,4 +33,12 @@ public class AuthController {
     {
         return ResponseEntity.ok(userService.login(dto));
     }
+
+    @PostMapping("admin/login")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @CrossOrigin
+    public ResponseEntity<UserDto> adminLogin(@RequestBody @Valid LoginDto dto)
+    {
+        return ResponseEntity.ok(userService.adminLogin(dto));
+    }
 }

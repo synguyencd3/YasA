@@ -7,4 +7,10 @@ import lombok.Setter;
 @Setter
 public class CantLoginException extends RuntimeException{
     private String message = "Username or password incorrect";
+
+    public CantLoginException(){};
+
+    public CantLoginException(String message) {
+        this.message = message;
+    }
 }

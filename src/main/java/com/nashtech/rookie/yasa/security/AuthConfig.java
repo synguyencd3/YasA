@@ -82,7 +82,7 @@ public class AuthConfig {
                                 "api/categories",
                                 "api/ratings/**",
                                 "api/ratings/",
-                                "/error"}).permitAll()
+                                "/error"}).hasAuthority("admin")
                         .requestMatchers(HttpMethod.POST,"api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)

@@ -5,6 +5,7 @@ import com.nashtech.rookie.yasa.dto.response.UserDto;
 import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.entity.User;
 import com.nashtech.rookie.yasa.exceptions.CantLoginException;
+import com.nashtech.rookie.yasa.exceptions.CantRegisterException;
 import com.nashtech.rookie.yasa.exceptions.UserExistException;
 import com.nashtech.rookie.yasa.mapper.UserMapper;
 import com.nashtech.rookie.yasa.repository.UserRepository;
@@ -65,5 +66,12 @@ public class UserServiceImpl implements UserService {
         }
         else
             throw  new CantLoginException();
+    }
+
+    @Override
+    public UserDto adminLogin(LoginDto dto) {
+        User user = userRepository.findByUsername(dto.getUsername());
+        if (user.getRole().equals("admin")) return login(dto);
+        else throw new CantLoginException("User is not admin");
     }
 }
