@@ -4,6 +4,7 @@ import com.nashtech.rookie.yasa.dto.response.ErrorResponse;
 import com.nashtech.rookie.yasa.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,4 +51,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 //        var error =  ErrorResponse.builder().code(HttpStatus.UNAUTHORIZED.value()).message("Authentication failed at controller advice").build();
 //        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
 //    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
+        String errorMessage = "Unauthorized";
+        return ResponseEntity.status(401).body(errorMessage);
+    }
 }
