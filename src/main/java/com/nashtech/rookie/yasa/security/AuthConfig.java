@@ -60,21 +60,21 @@ public class AuthConfig {
                                 "api/ratings/",
                                  "/error"}).permitAll()
                         .requestMatchers(HttpMethod.POST, new String[]{
+                                "api/ratings/**",
+                                "api/ratings/",
+                        }).authenticated()
+                        .requestMatchers(HttpMethod.POST, new String[]{
                                 "api/products/**",
                                 "api/products/",
                                 "api/categories/**",
                                 "api/categories",
-                                "api/ratings/**",
-                                "api/ratings/",
-                                "/error"}).authenticated()
+                        }).hasAuthority("admin")
                         .requestMatchers(HttpMethod.PUT, new String[]{
                                 "api/products/**",
                                 "api/products/",
                                 "api/categories/**",
                                 "api/categories",
-                                "api/ratings/**",
-                                "api/ratings/",
-                                "/error"}).authenticated()
+                        }).hasAuthority("admin")
                         .requestMatchers(HttpMethod.DELETE, new String[]{
                                 "api/products/**",
                                 "api/products/",
@@ -82,10 +82,11 @@ public class AuthConfig {
                                 "api/categories",
                                 "api/ratings/**",
                                 "api/ratings/",
-                                "/error"}).hasAuthority("admin")
+                        }).hasAuthority("admin")
                         .requestMatchers(HttpMethod.POST,"api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling((exception) -> exception.authenticationEntryPoint(authEntryPoint))
                 .build();
     }
 
