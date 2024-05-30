@@ -8,11 +8,24 @@ import Login from './login/login';
 import { getToken } from './services/authService';
 import CategoryCard from './components/pageContent/Category/CategoryCard';
 import { categoryUrl, productUrl } from './static/const';
+import NewProductForm from './components/form/productForm';
+import NewCategoryForm from './components/form/categoryForm';
 
 function App() {
 
-  let card = ProductCard
-  let url = productUrl
+  let object = {
+    card : ProductCard,
+    url: productUrl,
+    form: NewProductForm
+  }
+
+  let object2 = {
+    card : CategoryCard,
+    url: categoryUrl,
+    form: NewCategoryForm
+  }
+
+  
 
   let [token, setToken] = useState();
 
@@ -33,7 +46,7 @@ function App() {
               <Sidemenu/>
             </div>
             <div className="col-9 gx-5">
-              <List Card={card} url={url}/>
+              <List Card={object2.card} url={object2.url} Form={object2.form}/>
               </div>
         </div>
       </div>

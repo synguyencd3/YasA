@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
+import NewProductForm from "../form/productForm";
 
-const List = ({Card, url}) => {
+const List = ({Card, url, Form}) => {
+
+    const [showForm, setShowForm] = useState(false);
+
+    const handleButtonClick = () => {
+      setShowForm(true);
+    };
 
     let [contents, setContents] = useState(null);
   
@@ -32,7 +39,8 @@ const List = ({Card, url}) => {
   
       return( 
       <div>
-        <button type="button" className="btn btn-success mb-4">Add</button>
+         {showForm && <Form />}
+        <button type="button" className="btn btn-success mb-4" onClick={handleButtonClick}>Add</button>
         <div className="Paging mx-4 mt-2">
             <nav aria-label="Page navigation example">
               <ul className="pagination">
