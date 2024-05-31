@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { categoryUrl } from '../../static/const';
 
-const NewProductForm = () => {
-  const [productName, setProductName] = useState('');
-  const [category, setCategory] = useState('');
+const NewProductForm = ({content}) => {
+  const [productName, setProductName] = useState(content==null? '' : content.name);
+  const [category, setCategory] = useState(content==null ? '' : content.name);
   const [image, setImage] = useState(null);
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState(content == null ? '': content.description);
+  const [price, setPrice] = useState(content==null?'':content.price);
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);

@@ -2,7 +2,7 @@ import { getToken } from "../../services/authService";
 import { productUrl } from "../../static/const";
 
 
-const ProductCard = ({content, fetchFunc}) => {
+const ProductCard = ({content, fetchFunc, openModalFunc, editContentFunc}) => {
 
     const handleDelete = (id) => {
       if (window.confirm("Are you sure you want to delete this item?")) {
@@ -41,7 +41,10 @@ const ProductCard = ({content, fetchFunc}) => {
             <div className="col">{Date(content.updatedOn).slice(0, 24)}</div>
         </div>
       </div>
-      <a href="#" className="btn btn-primary mx-1">Edit</a>
+      <a href="#" className="btn btn-primary mx-1" onClick={() => {
+        editContentFunc(content)
+        openModalFunc()
+        }}>Edit</a>
       <a href="#" className="btn btn-danger mx-1" onClick={() =>handleDelete(content.id)}>Delete</a>
     </div>
   </div>)

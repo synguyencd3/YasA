@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
-import NewProductForm from "../form/productForm";
 
 const List = ({Card, url, Form}) => {
 
     const [showModal, setShowModal] = useState(false);
+
+    let [contents, setContents] = useState(null);
+  
+    let [page, setPage] = useState(0);
+
+    let [editContent, setEditContent] = useState(null)
 
     const handleOpenModal = () => {
       setShowModal(true);
@@ -12,10 +17,6 @@ const List = ({Card, url, Form}) => {
     const handleCloseModal = () => {
       setShowModal(false);
     };
-
-    let [contents, setContents] = useState(null);
-  
-    let [page, setPage] = useState(0);
 
     const pageUp = () => {
         setPage(prevPage => prevPage + 1);
@@ -53,7 +54,7 @@ const List = ({Card, url, Form}) => {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleCloseModal}></button>
             </div>
               <div className="modal-body">
-                <Form fetchFunc={fetchItem} toggleFunc={handleCloseModal}/>
+                <Form fetchFunc={fetchItem} toggleFunc={handleCloseModal} content={editContent}/>
               </div>
             </div>
           </div>
@@ -61,7 +62,7 @@ const List = ({Card, url, Form}) => {
       )}
 
 
-        <button type="button" className="btn btn-success mb-4" onClick={handleOpenModal}>Add</button>
+        <button type="button" className="btn btn-success mb-4" onClick={() =>{setEditContent(null);handleOpenModal()}}>Add</button>
         <div className="Paging mx-4 mt-2">
             <nav aria-label="Page navigation example">
               <ul className="pagination">
@@ -82,7 +83,7 @@ const List = ({Card, url, Form}) => {
           </div>
           {contents && contents.map((content) =>
           <div key = {content.id}>
-            <Card content={content} fetchFunc={fetchItem}/> 
+            <Card content={content} fetchFunc={fetchItem} openModalFunc={handleOpenModal} editContentFunc={setEditContent}/> 
           </div>
           )}
   

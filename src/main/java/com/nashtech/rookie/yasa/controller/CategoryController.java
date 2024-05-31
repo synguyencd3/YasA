@@ -38,6 +38,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
+    @CrossOrigin
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable("id") int id, @RequestBody UpdateCategoryDto dto ){
         return ResponseEntity.ok(categoryService.updateCategory(id,dto));
     }

@@ -3,16 +3,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { categoryUrl } from '../../static/const';
 import { getToken } from '../../services/authService';
 
-const NewCategoryForm = ({fetchFunc, toggleFunc}) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+const NewCategoryForm = ({fetchFunc, toggleFunc, content}) => {
+  const [name, setName] = useState(content== null?'' : content.name);
+  const [description, setDescription] = useState(content==null? '' : content.name);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const categoryData = { name, description };
     console.log('Category created:', categoryData);
     // Handle form submission, e.g., send data to an API or display it
-    PostItem(categoryData)
+    content== null? PostItem(categoryData) : PutItem(categoryData)
     toggleFunc()
   };
 
@@ -20,6 +20,23 @@ const NewCategoryForm = ({fetchFunc, toggleFunc}) => {
     fetch(categoryUrl,
       {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      }
+    ).then(res => {
+      console.log("created")
+      fetchFunc()
+    })
+  }
+
+  const PutItem = (data) => {
+
+    fetch(categoryUrl+`/${content.id}`,
+      {
+        method: 'PUT',
         headers: {
           Authorization: `Bearer ${getToken()}`,
           'Content-Type': 'application/json',
@@ -55,7 +72,10 @@ const NewCategoryForm = ({fetchFunc, toggleFunc}) => {
           required
         ></textarea>
       </div>
-      <button type="submit" className="btn btn-primary mt-3">Create Category</button>
+      {content==null? 
+      <button type="submit" className="btn btn-primary mt-3">Create Category</button> : 
+      <button type="submit" className="btn btn-primary mt-3">Edit Category</button>}
+
     </form>
   );
 };

@@ -5,7 +5,7 @@ import NewCategoryForm from "../../form/categoryForm";
 let CategoryGroup = {
     card : CategoryCard,
     url: categoryUrl,
-    form: NewCategoryForm
+    form: NewCategoryForm,
   }
 
 export default CategoryGroup;
