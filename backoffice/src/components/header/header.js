@@ -1,3 +1,5 @@
+import { logout } from "../../services/authService";
+
 const Header = () => {
     return( 
         <nav className="navbar bg-body-tertiary">
@@ -5,9 +7,7 @@ const Header = () => {
           <a className="navbar-brand" href="#">
             <a href="/"><h2 className="px-5">YasA</h2></a>
           </a>
-          <button type="button" id="cartButton" className="btn btn-success mx-5">
-            <i className="fa-solid fa-cart-shopping"></i> Cart</button>
-
+          <button type="button" id="cartButton" className="btn btn-secondary mx-5" onClick={()=>logout()}>Logout</button>
         </div>
     </nav>
     )

@@ -1,15 +1,21 @@
-import { categoryUrl } from "../../../static/const";
-import { getToken } from "../../../services/authService";
+import { getToken } from "../../services/authService";
+import { categoryUrl } from "../../static/const";
+
 
 const CategoryCard = ({content, fetchFunc}) => {
 
   const handleDelete = (id) => {
-    fetch(categoryUrl+`/${id}`, { 
-      method: 'DELETE' ,
-      headers: {Authorization: `Bearer ${getToken()}`}
-    }).then(
-      () =>fetchFunc()
-    )
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      fetch(categoryUrl+`/${id}`, { 
+        method: 'DELETE' ,
+        headers: {Authorization: `Bearer ${getToken()}`}
+      }).then(
+        () =>fetchFunc()
+      )
+      console.log("Item deleted");
+    } else {
+      console.log("Deletion cancelled");
+    }
   }
 
     return (

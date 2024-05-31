@@ -1,15 +1,18 @@
 import './App.css';
 import Header from './components/header/header';
 import Sidemenu from './components/sideMenu/sideMenu';
-import ProductCard from './components/pageContent/Product/productCard';
 import List from './components/pageContent/List';
 import { useState, useEffect } from 'react';
 import Login from './login/login';
 import { getToken } from './services/authService';
-import CategoryCard from './components/pageContent/Category/CategoryCard';
 import { categoryUrl, productUrl } from './static/const';
+import ProductCard from './components/card/productCard';
 import NewProductForm from './components/form/productForm';
+import CategoryCard from './components/card/CategoryCard';
 import NewCategoryForm from './components/form/categoryForm';
+import ProductGroup from './components/sideMenu/group objects/ProductGroup';
+
+
 
 function App() {
 
@@ -24,6 +27,8 @@ function App() {
     url: categoryUrl,
     form: NewCategoryForm
   }
+
+  let [group, setGroup] = useState(ProductGroup)
   
   let [token, setToken] = useState();
 
@@ -41,10 +46,10 @@ function App() {
       <div className="container-fluid mt-5">
         <div className="row">
           <div className="col-3">
-              <Sidemenu/>
+              <Sidemenu setGroupFunc={setGroup}/>
             </div>
             <div className="col-9 gx-5">
-              <List Card={object2.card} url={object2.url} Form={object2.form}/>
+              <List Card={group.card} url={group.url} Form={group.form}/>
               </div>
         </div>
       </div>

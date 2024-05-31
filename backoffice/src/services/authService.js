@@ -1,3 +1,5 @@
+import Login from "../login/login";
+
 export function getToken() {
     const tokenString = sessionStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
@@ -9,6 +11,7 @@ export function setTokenToStorage(userToken) {
     console.log("sent to storage"+userToken);
   }
 
-function logout() {
-    localStorage.removeItem('token');
+export function logout() {
+    console.log("logging out")
+    sessionStorage.removeItem('token');
 }

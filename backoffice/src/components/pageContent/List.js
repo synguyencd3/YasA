@@ -3,10 +3,14 @@ import NewProductForm from "../form/productForm";
 
 const List = ({Card, url, Form}) => {
 
-    const [showForm, setShowForm] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-    const handleButtonClick = () => {
-      setShowForm(prev => !prev);
+    const handleOpenModal = () => {
+      setShowModal(true);
+    };
+  
+    const handleCloseModal = () => {
+      setShowModal(false);
     };
 
     let [contents, setContents] = useState(null);
@@ -39,8 +43,25 @@ const List = ({Card, url, Form}) => {
   
       return( 
       <div>
-         {showForm && <Form fetchFunc={fetchItem} toggleFunc={handleButtonClick}/>}
-        <button type="button" className="btn btn-success mb-4" onClick={handleButtonClick}>Add</button>
+
+         {showModal && (
+        <div className="modal show d-block" tabIndex="-1" role="dialog" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleCloseModal}></button>
+            </div>
+              <div className="modal-body">
+                <Form fetchFunc={fetchItem} toggleFunc={handleCloseModal}/>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+        <button type="button" className="btn btn-success mb-4" onClick={handleOpenModal}>Add</button>
         <div className="Paging mx-4 mt-2">
             <nav aria-label="Page navigation example">
               <ul className="pagination">

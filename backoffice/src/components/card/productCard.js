@@ -1,15 +1,21 @@
-import { getToken } from "../../../services/authService";
-import { productUrl } from "../../../static/const";
+import { getToken } from "../../services/authService";
+import { productUrl } from "../../static/const";
+
 
 const ProductCard = ({content, fetchFunc}) => {
 
     const handleDelete = (id) => {
-      fetch(productUrl+`/${id}`, { 
-        method: 'DELETE',
-        headers: {Authorization: `Bearer ${getToken()}`}
-       } ).then(
-        () =>fetchFunc()
-      )
+      if (window.confirm("Are you sure you want to delete this item?")) {
+        fetch(productUrl+`/${id}`, { 
+          method: 'DELETE',
+          headers: {Authorization: `Bearer ${getToken()}`}
+         } ).then(
+          () =>fetchFunc()
+        )
+        console.log("Item deleted");
+      } else {
+        console.log("Deletion cancelled");
+      }
     }
 
     return (
