@@ -64,7 +64,7 @@ public class CartServiceImpl implements CartService {
             cartDetail.setCart(cart);
             cartDetail.setProduct(product);
             cart.getProducts().add(cartDetail);
-            updateTotal(cart);
+            updateTotal(cart,1);
             cartDetailRepository.save(cartDetail);
         } else
         {
@@ -87,17 +87,26 @@ public class CartServiceImpl implements CartService {
         target.setQuantity(target.getQuantity()+quantity);
     }
 
-    private void updateTotal(Cart cart) {
-        cart.setTotal(cart.getTotal()+1);
+    private void updateTotal(Cart cart, int num) {
+        cart.setTotal(cart.getTotal()+num);
     }
 
     @Override
     public CartDto removeProductFromCart(int cartId, int productId) {
         CartDetailKey key = new CartDetailKey();
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("Cart not found"));
+        updateTotal(cart, -1);
         key.setProductId(productId);
         key.setCartId(cartId);
         cartDetailRepository.deleteById(key);
         return getCart(cartId);
+    }
+
+    @Override
+    public CartDto removeProductFromCart(String bearerToken, int productId) {
+        String token = bearerToken.replace("Bearer ", "");
+        int cartId = JWTService.getCart(token);
+        return removeProductFromCart(cartId, productId);
     }
 
     @Override
@@ -111,6 +120,13 @@ public class CartServiceImpl implements CartService {
         cartDetailRepository.save(cartDetail);
 
         return getCart(cartId);
+    }
+
+    @Override
+    public CartDto updateProductQuantity(String bearerToken, int productId, CartUpdateQuantityDto dto) {
+        String token = bearerToken.replace("Bearer ", "");
+        int cartId = JWTService.getCart(token);
+        return updateProductQuantity(cartId,productId,dto);
     }
 
 

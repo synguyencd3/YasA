@@ -20,5 +20,9 @@ public interface CartService {
 
     CartDto removeProductFromCart(int cartId, int productId);
 
+    CartDto removeProductFromCart(String bearerToken,int productId);
+
     CartDto updateProductQuantity(int cartId, int productId, CartUpdateQuantityDto dto);
+
+    CartDto updateProductQuantity(String bearerToken, int productId, CartUpdateQuantityDto dto);
 }
