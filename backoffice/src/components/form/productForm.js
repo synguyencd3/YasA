@@ -46,8 +46,8 @@ const NewProductForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="container mt-5">
-      <div className="form-group m-3">
+    <form onSubmit={handleSubmit} className="container">
+      <div className="form-group">
         <label htmlFor="productName">Product Name:</label>
         <input
           type="text"
@@ -71,7 +71,7 @@ const NewProductForm = () => {
         </select>
       </div>
       <div className="form-group">
-        <label htmlFor="image">Image:</label>
+        <label htmlFor="image">Image : </label>
         <input
           type="file"
           className="form-control-file"
@@ -102,7 +102,7 @@ const NewProductForm = () => {
           required
         />
       </div>
-      <button type="submit" className="btn btn-primary">Create Product</button>
+      <button type="submit" className="btn btn-primary mt-3">Create Product</button>
     </form>
   );
 };

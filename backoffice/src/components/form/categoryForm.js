@@ -33,7 +33,7 @@ const NewCategoryForm = ({fetchFunc, toggleFunc}) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="container mt-5">
+    <form onSubmit={handleSubmit} className="container">
       <div className="form-group">
         <label htmlFor="name">Name:</label>
         <input
@@ -55,7 +55,7 @@ const NewCategoryForm = ({fetchFunc, toggleFunc}) => {
           required
         ></textarea>
       </div>
-      <button type="submit" className="btn btn-primary">Create Category</button>
+      <button type="submit" className="btn btn-primary mt-3">Create Category</button>
     </form>
   );
 };
