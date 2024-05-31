@@ -1,6 +1,8 @@
 import { useParams } from 'react-router';
 import { useState, useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getToken } from '../../services/authService';
+import { cartUrl, productUrl, ratingUrl } from '../../static/const';
 
 const ProductDetail = () => {
 
@@ -10,7 +12,7 @@ const ProductDetail = () => {
 	const [comments, setComments] = useState(null)
 
     const getProduct =() => {
-        fetch("http://localhost:8080/api/products/"+id).then(res => {
+        fetch(productUrl+`/${id}`).then(res => {
             return res.json()
         }).then((data) => {
             setProduct(data)
@@ -18,13 +20,29 @@ const ProductDetail = () => {
     }
 
 	const getComments = () => {
-		fetch("http://localhost:8080/api/ratings?product="+id).then(res => {
+		fetch(ratingUrl+"?product="+id).then(res => {
             return res.json()
         }).then((data) => {
             console.log(data);
             setComments(data)
         })
 	}
+
+	const addToCart = () => {
+        const data = {
+            productId: id,
+            quantity: 1
+        }
+        console.log(data)
+        fetch(cartUrl, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data)
+        })
+    }
 
     useEffect(()=>{
         getProduct()
@@ -52,7 +70,7 @@ const ProductDetail = () => {
 						</div>
 						{product && <p className="product-description mt-3">{product.description}</p>}
 						{product && <h4 className="price">current price: <span>{product.price}</span></h4>}
-						<button className="btn btn-primary mt-3" type="button">add to cart</button>
+						<button className="btn btn-primary mt-3" type="button" onClick={() =>addToCart()}>add to cart</button>
 					</div>
 				</div>
 			</div>

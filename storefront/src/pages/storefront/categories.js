@@ -10,6 +10,7 @@ const CategoriesList = ({selectCategory}) => {
             return res.json()
         }).then((data) => {
             console.log(data);
+            data.sort((a,b) => (a.id-b.id))
             setCategories(data)
         })
     }, [])
