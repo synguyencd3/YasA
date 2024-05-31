@@ -64,11 +64,11 @@ public class CartServiceImpl implements CartService {
             cartDetail.setCart(cart);
             cartDetail.setProduct(product);
             cart.getProducts().add(cartDetail);
+            updateTotal(cart);
             cartDetailRepository.save(cartDetail);
         } else
         {
             CartDetail existedCart = isExisted.get();
-            //existedCart.addQuantity(cartItem.getQuantity());
             addQuantity(existedCart, cartItem.getQuantity());
             cart.getProducts().add(existedCart);
             cartDetailRepository.save(existedCart);
@@ -85,6 +85,10 @@ public class CartServiceImpl implements CartService {
 
     private void addQuantity(CartDetail target, int quantity) {
         target.setQuantity(target.getQuantity()+quantity);
+    }
+
+    private void updateTotal(Cart cart) {
+        cart.setTotal(cart.getTotal()+1);
     }
 
     @Override

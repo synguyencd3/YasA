@@ -32,10 +32,6 @@ public class Product extends Audit{
     @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
 
-//    @OneToMany(mappedBy = "product")
-//    @JsonIgnore
-//    private List<Rating> rating;
-
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     Set<CartDetail> cart = new HashSet<CartDetail>();
