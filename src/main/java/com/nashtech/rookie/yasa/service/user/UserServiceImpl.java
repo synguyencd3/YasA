@@ -19,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -57,15 +58,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto login(LoginDto dto) {
-        User user = userRepository.findByUsername(dto.getUsername());
-        byte[] salt = Base64.getDecoder().decode(user.getSalt());
-        if (SHA521Hasher.checkPassword(user.getSecret(),dto.getPassword(), salt)) {
-            UserDto responseDto = UserMapper.INSTANCE.toDto(user);
-            responseDto.setAccessKey(JWTService.createJWT(user));
-            return responseDto;
-        }
-        else
-            throw  new CantLoginException();
+            User user = userRepository.findByUsername(dto.getUsername());
+            if (user == null ) throw new CantLoginException("User not found") ;
+            byte[] salt = Base64.getDecoder().decode(user.getSalt());
+            if (SHA521Hasher.checkPassword(user.getSecret(), dto.getPassword(), salt)) {
+                UserDto responseDto = UserMapper.INSTANCE.toDto(user);
+                responseDto.setAccessKey(JWTService.createJWT(user));
+                return responseDto;
+            } else
+                throw new CantLoginException("Wrong password");
     }
 
     @Override
