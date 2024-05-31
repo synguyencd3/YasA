@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { categoryUrl } from "../../static/const";
 
 
 const CategoriesList = ({selectCategory}) => {
     const [categories, setCategories] = useState(null);
 
     useEffect(()=>{
-        fetch("http://localhost:8080/api/categories").then(res => {
+        fetch(categoryUrl).then(res => {
             return res.json()
         }).then((data) => {
             console.log(data);

@@ -2,14 +2,14 @@ import { useState, useEffect } from "react"
 import CategoriesList from "./categories"
 import ProductsList from "./products"
 import Carousel from "../../component/carousel"
+import { categoryUrl, productUrl } from "../../static/const"
 
-const Storefront = () => {
+const Storefront = ({handleCloseModal, showModal}) => {
 
     const [products, setProducts] = useState(null)
     const [featuredProducts, setFeaturedProducts] = useState(null)
-
     const getProducts = ()  => {
-        fetch("http://localhost:8080/api/products").then(res => {
+        fetch(productUrl).then(res => {
             return res.json()
         }).then((data) => {
             console.log(data)
@@ -19,7 +19,9 @@ const Storefront = () => {
     }
 
     const filterByCategory = (category) => {
-        fetch(`http://localhost:8080/api/products?category=${category.id}`).then(res => {
+        console.log("category Id "+category.id)
+        console.log(productUrl+`?category=${category.id}`)
+        fetch(productUrl+`?category=${category.id}`).then(res => {
             return res.json()
         }).then((data) => {
             setProducts(data)
@@ -38,10 +40,12 @@ const Storefront = () => {
     }, [])
 
     const handleClick = (category) => {
+        console.log("category"+category.name)
         filterByCategory(category)
      }
 
     return (
+        <div>
         <div className="container-fluid mt-5">
             <Carousel products={featuredProducts}/>
             <div className="row">
@@ -53,6 +57,7 @@ const Storefront = () => {
                 <ProductsList products={products}/>
             </div>
             </div>
+        </div>
         </div>
     )
 }

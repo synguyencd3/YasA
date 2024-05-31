@@ -9,6 +9,6 @@ export function setTokenToStorage(userToken) {
     console.log("sent to storage"+userToken);
   }
 
-function logout() {
-    localStorage.removeItem('token');
+export function logout() {
+    sessionStorage.removeItem('token');
 }
