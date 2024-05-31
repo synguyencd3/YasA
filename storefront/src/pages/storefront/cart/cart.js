@@ -18,7 +18,16 @@ const CartItems = () => {
   };
 
   const updateQuantity = (id, quantity) => {
-    
+    fetch(cartUrl+`/products/${id}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        quantity: quantity
+      })
+    })
   };
 
   const debouncedUpdateQuantity = useCallback(debounce(updateQuantity, 300), []);
@@ -37,6 +46,7 @@ const CartItems = () => {
         return res.json()
     }).then((data) => {
         console.log("cart"+data)
+        data.products.sort((a,b) => (a.productId - b.productId))
         setCart(data)
     })
   }

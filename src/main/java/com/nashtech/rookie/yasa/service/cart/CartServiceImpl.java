@@ -12,6 +12,9 @@ import com.nashtech.rookie.yasa.repository.CartRepository;
 import com.nashtech.rookie.yasa.repository.ProductRepository;
 import com.nashtech.rookie.yasa.util.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
