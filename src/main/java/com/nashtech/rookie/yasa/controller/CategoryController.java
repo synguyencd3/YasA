@@ -23,7 +23,7 @@ public class CategoryController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size
     ) {
-        return ResponseEntity.ok(categoryService.getAll(page,size));
+        return ResponseEntity.ok(categoryService.getAll(page, size));
     }
 
     @PostMapping()
