@@ -15,7 +15,7 @@ public class CreateProductDto {
     private int price;
     private String description;
     private String image;
-    private Category category;
+    private int category;
     private boolean isFeatured;
 
 }

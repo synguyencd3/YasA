@@ -19,7 +19,7 @@ public interface CartToOrderMapper {
     })
     OrderDetail cartDetailToOrderDetail(CartDetail cartDetail);
 
-    @AfterMapping
+    //@AfterMapping
     default void setOrderIdAndOrder(@MappingTarget OrderDetail orderDetail, CartDetail cartDetail, @Context int orderId, @Context Order order) {
         orderDetail.getId().setOrderId(orderId);
         orderDetail.setOrder(order);
