@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { categoryUrl } from '../../static/const';
+import { categoryUrl, productUrl } from '../../static/const';
+import { getStorage, ref, uploadBytes, getDownloadURL  } from "firebase/storage";
+import { getToken } from '../../services/authService';
 
-const NewProductForm = ({content}) => {
+const NewProductForm = ({content,fetchFunc, toggleFunc}) => {
   const [productName, setProductName] = useState(content==null? '' : content.name);
   const [category, setCategory] = useState(content==null ? '' : content.name);
   const [image, setImage] = useState(null);
@@ -14,7 +16,6 @@ const NewProductForm = ({content}) => {
   const [categories, setCategories] = useState(null);
 
   const fetchItem = () => {
-
     fetch(categoryUrl+`?size=99`).then(res => {
       return res.json()
   }).then((data) => {
@@ -27,22 +28,43 @@ const NewProductForm = ({content}) => {
     fetchItem()
   }, [])
 
+  const storage = getStorage();
 
-  const handleSubmit = (e) => {
-    console.log("submit")
-    e.preventDefault();
-    // Handle form submission, e.g., send data to an API or display it
-    const formData = new FormData();
-    formData.append('productName', productName);
-    formData.append('category', category);
-    formData.append('image', image);
-    formData.append('description', description);
-    formData.append('price', price);
-
-    // Log form data to console (for demonstration purposes)
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+  const postProduct = async () => {
+    const imageRef = ref(storage, `Products/${image.name}`)
+    await uploadBytes(imageRef, image)
+    const url = await getDownloadURL(ref(imageRef))
+    console.log("url "+url)
+    const data = 
+    {
+      name: productName,
+      price: price,
+      description: description,
+      image: url,
+      category: category
     }
+    console.log("fetching")
+    console.log(data)
+    await fetch(productUrl,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      }
+    )
+
+    console.log("created")
+  }
+
+  const handleSubmit = async (e) => {
+    console.log("submit")
+    e.preventDefault()
+    await postProduct()
+    fetchFunc()
+    toggleFunc()
   };
 
   return (

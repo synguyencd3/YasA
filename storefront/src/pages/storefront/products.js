@@ -29,7 +29,7 @@ const ProductsList = ({products}) => {
                          <div className="col-4" key={product.id}>
                          <div className="p-5">
                              <div className="card product-item">
-                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaBqXPJxDAvLfz-d0uNwJtxUSGKexAZfWzkknNlUdU0A&s" className="card-img-top" alt="..."/>
+                                 <img src={product.image ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaBqXPJxDAvLfz-d0uNwJtxUSGKexAZfWzkknNlUdU0A&s"} className="card-img-top" alt="..."/>
                                  <div className="card-body">
                                  <div className="text-center">
                                      <a href={`products/${product.id}`}><h5 className="card-title">{product.name}</h5></a>
