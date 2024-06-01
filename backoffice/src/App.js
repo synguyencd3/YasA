@@ -5,28 +5,11 @@ import List from './components/pageContent/List';
 import { useState, useEffect } from 'react';
 import Login from './login/login';
 import { getToken } from './services/authService';
-import { categoryUrl, productUrl } from './static/const';
-import ProductCard from './components/card/productCard';
-import NewProductForm from './components/form/productForm';
-import CategoryCard from './components/card/CategoryCard';
-import NewCategoryForm from './components/form/categoryForm';
 import ProductGroup from './components/sideMenu/group objects/ProductGroup';
 
 
 
 function App() {
-
-  let object = {
-    card : ProductCard,
-    url: productUrl,
-    form: NewProductForm
-  }
-
-  let object2 = {
-    card : CategoryCard,
-    url: categoryUrl,
-    form: NewCategoryForm
-  }
 
   let [group, setGroup] = useState(ProductGroup)
   

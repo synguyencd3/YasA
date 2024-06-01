@@ -1,14 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 const List = ({Card, url, Form}) => {
 
     const [showModal, setShowModal] = useState(false);
-
     let [contents, setContents] = useState(null);
-  
     let [page, setPage] = useState(0);
-
-    let [editContent, setEditContent] = useState(null)
+    let [editContent, setEditContent] = useState(null);
 
     const handleOpenModal = () => {
       setShowModal(true);
@@ -37,14 +34,19 @@ const List = ({Card, url, Form}) => {
           setContents(data)
       })
       }
+
+    useMemo(() => {
+      setContents(null)
+      setPage(0)
+    }, [Card])
   
     useEffect( () => {
       fetchItem();
-    }, [page])
+    }, [page, Card])
   
-      return( 
+      return(
       <div>
-
+        {console.log("rendering")}
          {showModal && (
         <div className="modal show d-block" tabIndex="-1" role="dialog" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
           <div className="modal-dialog" role="document">
@@ -81,7 +83,8 @@ const List = ({Card, url, Form}) => {
               </ul>
             </nav>
           </div>
-          {contents && contents.map((content) =>
+
+          { contents && contents.map((content) =>
           <div key = {content.id}>
             <Card content={content} fetchFunc={fetchItem} openModalFunc={handleOpenModal} editContentFunc={setEditContent}/> 
           </div>
