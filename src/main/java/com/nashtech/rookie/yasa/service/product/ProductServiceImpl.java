@@ -9,6 +9,7 @@ import com.nashtech.rookie.yasa.mapper.ProductMapper;
 import com.nashtech.rookie.yasa.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,9 +24,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public List<ProductDto> getAllProducts(int page, int size) {
+    public Page<ProductDto> getAllProducts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        return productRepository.findAll(pageable).stream().map(ProductMapper.INSTANCE::toDto).collect(Collectors.toList());
+        return productRepository.findAll(pageable).map(ProductMapper.INSTANCE::toDto);
     }
 
     @Override
@@ -41,9 +42,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllInCategory(int id, int page, int size) {
+    public Page<ProductDto> getAllInCategory(int id, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        return productRepository.findByCategory_Id(id, pageable).stream().map(ProductMapper.INSTANCE::toDto).collect(Collectors.toList());
+        return productRepository.findByCategory_Id(id, pageable).map(ProductMapper.INSTANCE::toDto);
     }
 
 

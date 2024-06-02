@@ -43,7 +43,7 @@ public class ProductServiceTest {
         product2.setName("test2");
 
         given(productRepository.findAll()).willReturn(List.of(product1,product2));
-        var productList = productService.getAllProducts();
+        var productList = productService.getAllProducts(0,99);
 
         assertThat(productList).isNotNull();
         assertThat(productList.size()).isEqualTo(2);
