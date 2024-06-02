@@ -2,19 +2,7 @@ import { useEffect, useState } from "react";
 import { categoryUrl } from "../../static/const";
 
 
-const CategoriesList = ({selectCategory}) => {
-    const [categories, setCategories] = useState(null);
-
-    useEffect(()=>{
-        fetch(categoryUrl).then(res => {
-            return res.json()
-        }).then((data) => {
-            console.log(data);
-            data.sort((a,b) => (a.id-b.id))
-            setCategories(data)
-        })
-    }, [])
-
+const CategoriesList = ({categories, selectCategory}) => {
 
     return (
         <ol className="list-group list-group-numbered">

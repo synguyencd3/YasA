@@ -25,6 +25,7 @@ const ProductsList = ({products}) => {
              <h1>New Product</h1>
                 <div className="container overflow-hidden text-center">
                     <div className="row gx-1">
+                        {console.log(products)}
                     {products && products.map((product) =>
                          <div className="col-4" key={product.id}>
                          <div className="p-5">

@@ -8,39 +8,46 @@ const Storefront = ({handleCloseModal, showModal}) => {
 
     const [products, setProducts] = useState(null)
     const [featuredProducts, setFeaturedProducts] = useState(null)
+    const [categories, setCategories] = useState(null);
+
+
+    const getCategories = () => {
+        fetch(categoryUrl).then(res => {
+            return res.json()
+        }).then((data) => {
+            data.content.sort((a,b) => (a.id-b.id))
+            setCategories(data.content)
+        })
+    }
+
     const getProducts = ()  => {
         fetch(productUrl).then(res => {
             return res.json()
         }).then((data) => {
-            console.log(data)
-            setProducts(data)
-            filterProducts(data)
+            setProducts(data.content)
+            filterIsFeaturedProducts(data.content)
         })
     }
 
     const filterByCategory = (category) => {
-        console.log("category Id "+category.id)
-        console.log(productUrl+`?category=${category.id}`)
         fetch(productUrl+`?category=${category.id}`).then(res => {
             return res.json()
         }).then((data) => {
-            setProducts(data)
+            setProducts(data.content)
         })
     }
     
-    const filterProducts = (products) =>{
+    const filterIsFeaturedProducts = (products) =>{
         const filteredProduct = products.filter((product) => product.featured)
         setFeaturedProducts(filteredProduct)
-        console.log(filteredProduct);
     }
-
 
     useEffect( ()=>{
         getProducts()
+        getCategories();
     }, [])
 
     const handleClick = (category) => {
-        console.log("category"+category.name)
         filterByCategory(category)
      }
 
@@ -50,7 +57,7 @@ const Storefront = ({handleCloseModal, showModal}) => {
             <Carousel products={featuredProducts}/>
             <div className="row">
                 <div className="col-3 mt-5 pt-4">
-                    <CategoriesList selectCategory={handleClick}/>
+                    <CategoriesList categories={categories} selectCategory={handleClick}/>
                 </div>
 
                 <div className="col-9 gx-5">
