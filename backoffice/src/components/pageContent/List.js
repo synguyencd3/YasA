@@ -6,6 +6,8 @@ const List = ({Card, url, Form}) => {
     let [contents, setContents] = useState(null);
     let [page, setPage] = useState(0);
     let [editContent, setEditContent] = useState(null);
+    let [lastPage, setLastPage] = useState(false);
+    let [firstPage, setFirstPage] = useState(false);
 
     const handleOpenModal = () => {
       setShowModal(true);
@@ -30,8 +32,10 @@ const List = ({Card, url, Form}) => {
         fetch(url+`?size=4&page=${page}`).then(res => {
           return res.json()
       }).then((data) => {
-          console.log(data)
-          setContents(data)
+        console.log(data)
+          setLastPage(data.last)
+          setFirstPage(data.first)
+          setContents(data.content)
       })
       }
 
@@ -68,13 +72,15 @@ const List = ({Card, url, Form}) => {
         <div className="Paging mx-4 mt-2">
             <nav aria-label="Page navigation example">
               <ul className="pagination">
-                { page>0 ?  <li className="page-item" onClick={() => {pageDown()}}>
+                {console.log(firstPage)}
+                {console.log(lastPage)}
+                { !firstPage ?  <li className="page-item" onClick={() => {pageDown()}}>
                   <a className="page-link" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                   </a>
                 </li>: <div></div>}
 
-                {contents && contents.length >0 ?
+                { !lastPage ?
                 <li className="page-item" onClick={() => {pageUp()}}>
                   <a className="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
