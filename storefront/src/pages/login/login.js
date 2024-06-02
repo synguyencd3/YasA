@@ -1,8 +1,9 @@
 import { useState} from "react"
 import { setTokenToStorage } from "../../services/authService";
+import { loginUrl } from "../../static/const";
 
 async function loginUser(credentials) {
-    return fetch('http://localhost:8080/api/auth/login', {
+    return fetch(loginUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
