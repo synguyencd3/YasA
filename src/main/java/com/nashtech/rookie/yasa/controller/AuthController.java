@@ -21,14 +21,12 @@ public class AuthController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    @CrossOrigin
     public ResponseEntity<UserDto> register(@RequestBody @Valid RegisterDto dto){
         return ResponseEntity.ok(userService.register(dto));
     }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @CrossOrigin
     public ResponseEntity<UserDto> login(@RequestBody @Valid LoginDto dto)
     {
         return ResponseEntity.ok(userService.login(dto));
@@ -36,7 +34,6 @@ public class AuthController {
 
     @PostMapping("admin/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @CrossOrigin
     public ResponseEntity<UserDto> adminLogin(@RequestBody @Valid LoginDto dto)
     {
         return ResponseEntity.ok(userService.adminLogin(dto));
