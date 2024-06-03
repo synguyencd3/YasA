@@ -47,6 +47,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @CrossOrigin
     public ResponseEntity<ProductDto> updateProduct(@PathVariable("id")  @Min(value = 1, message = "invalid product id")int id,@RequestBody @Valid UpdateProductDto product) {
         return ResponseEntity.ok(productService.updateProduct(id, product));
     }

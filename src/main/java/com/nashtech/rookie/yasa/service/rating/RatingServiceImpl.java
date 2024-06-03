@@ -9,6 +9,10 @@ import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.RatingMapper;
 import com.nashtech.rookie.yasa.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,25 +30,27 @@ public class RatingServiceImpl implements RatingService{
     }
 
     @Override
-    public List<RatingDto> getAll() {
-
-        return ratingRepository.findAll().stream().map(RatingMapper.INSTANCE::toDto).collect(Collectors.toList());
+    public Page<RatingDto> getAll( int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        return ratingRepository.findAll(pageable).map(RatingMapper.INSTANCE::toDto);
     }
 
     @Override
-    public List<RatingDto> getByProduct(int productId) {
-
-        return ratingRepository.findByProductId(productId).stream().map(RatingMapper.INSTANCE::toDto).collect(Collectors.toList());
+    public Page<RatingDto> getByProduct(int productId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        return ratingRepository.findByProductId(productId,pageable).map(RatingMapper.INSTANCE::toDto);
     }
 
     @Override
-    public List<RatingDto> getByUser(int userId) {
-        return ratingRepository.findByUserId(userId).stream().map(RatingMapper.INSTANCE::toDto).collect(Collectors.toList());
+    public Page<RatingDto> getByUser(int userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        return ratingRepository.findByUserId(userId,pageable).map(RatingMapper.INSTANCE::toDto);
     }
 
     @Override
-    public List<RatingDto> getByUserAndProduct(int userId, int productId) {
-        return ratingRepository.findByUserIdAndProductId(userId,productId).stream().map(RatingMapper.INSTANCE::toDto).collect(Collectors.toList());
+    public Page<RatingDto> getByUserAndProduct(int userId, int productId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        return ratingRepository.findByUserIdAndProductId(userId,productId,pageable).map(RatingMapper.INSTANCE::toDto);
     }
 
     @Override

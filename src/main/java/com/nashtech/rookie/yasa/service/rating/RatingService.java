@@ -2,18 +2,19 @@ package com.nashtech.rookie.yasa.service.rating;
 import com.nashtech.rookie.yasa.dto.request.CreateRatingDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateRatingDto;
 import com.nashtech.rookie.yasa.dto.response.RatingDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface RatingService {
      RatingDto createRating(CreateRatingDto dto);
 
-     List<RatingDto> getAll();
+     Page<RatingDto> getAll(int page, int size);
 
-     List<RatingDto> getByProduct(int id);
+     Page<RatingDto> getByProduct(int id, int page, int size);
 
-     List<RatingDto> getByUser(int id);
-     List<RatingDto> getByUserAndProduct(int userId, int productId);
+     Page<RatingDto> getByUser(int id, int page, int size);
+     Page<RatingDto> getByUserAndProduct(int userId, int productId, int page, int size);
 
      RatingDto getRating(int id);
 
