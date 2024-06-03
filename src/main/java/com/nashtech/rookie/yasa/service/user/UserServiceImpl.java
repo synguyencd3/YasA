@@ -71,9 +71,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto adminLogin(LoginDto dto) {
-        User user = userRepository.findByUsername(dto.getUsername());
-        if (user.getRole().equals("admin")) return login(dto);
-        else throw new CantLoginException("User is not admin");
+        try {
+            User user = userRepository.findByUsername(dto.getUsername());
+            if (user.getRole().equals("admin")) return login(dto);
+            else throw new CantLoginException("User is not admin");
+        } catch (CantLoginException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new CantLoginException("User not found");
+        }
     }
 
     @Override
