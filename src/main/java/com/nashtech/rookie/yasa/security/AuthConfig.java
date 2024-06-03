@@ -40,6 +40,7 @@ public class AuthConfig {
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",
+            "/bus/v3/api-docs/**",
             "/configuration/security",
             "/swagger-ui/**",
             "/swagger-ui/index.html",

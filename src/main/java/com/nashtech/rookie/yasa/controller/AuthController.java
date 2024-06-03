@@ -19,10 +19,10 @@ public class AuthController {
     private UserService userService;
 
 
-    @PostMapping()
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserDto> register(@RequestBody @Valid RegisterDto dto){
-        return ResponseEntity.ok(userService.register(dto));
+        return ResponseEntity.ok(userService.register(dto,"user"));
     }
 
     @PostMapping("/login")
@@ -37,5 +37,12 @@ public class AuthController {
     public ResponseEntity<UserDto> adminLogin(@RequestBody @Valid LoginDto dto)
     {
         return ResponseEntity.ok(userService.adminLogin(dto));
+    }
+
+    @PostMapping("admin/register")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<UserDto> adminRegister(@RequestBody @Valid RegisterDto dto)
+    {
+        return ResponseEntity.ok(userService.adminRegister(dto));
     }
 }

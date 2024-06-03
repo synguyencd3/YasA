@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public UserDto register(RegisterDto dto) {
+    public UserDto register(RegisterDto dto, String role) {
         //Generate salt
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
         // Map dto to User and set additional detail
         User user = UserMapper.INSTANCE.toEntity(dto);//new User();
-        user.setRole("user");
+        user.setRole(role);
         user.setSalt(Base64.getEncoder().encodeToString(salt));
         user.setSecret(hashedPassword);
         user.setCart(cartService.createCart(user));
@@ -74,5 +74,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(dto.getUsername());
         if (user.getRole().equals("admin")) return login(dto);
         else throw new CantLoginException("User is not admin");
+    }
+
+    @Override
+    public UserDto adminRegister(RegisterDto dto) {
+        return register(dto,"admin");
     }
 }
