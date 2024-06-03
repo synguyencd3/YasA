@@ -92,7 +92,7 @@ const List = ({Card, url, Form}) => {
 
           { contents && contents.map((content) =>
           <div key = {content.id}>
-            <Card content={content} fetchFunc={fetchItem} openModalFunc={handleOpenModal} editContentFunc={setEditContent}/> 
+            <Card content={content} fetchFunc={fetchItem} openModalFunc={handleOpenModal} editContentFunc={setEditContent} setPageFunc={setPage}/> 
           </div>
           )}
   

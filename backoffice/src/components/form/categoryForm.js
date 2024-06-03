@@ -8,12 +8,15 @@ const NewCategoryForm = ({fetchFunc, toggleFunc, content}) => {
   const [description, setDescription] = useState(content==null? '' : content.name);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const categoryData = { name, description };
-    console.log('Category created:', categoryData);
-    // Handle form submission, e.g., send data to an API or display it
-    content== null? PostItem(categoryData) : PutItem(categoryData)
-    toggleFunc()
+    if (window.confirm("Are you sure to continue operation ?")) {
+      e.preventDefault();
+      const categoryData = { name, description };
+      console.log('Category created:', categoryData);
+      content== null? PostItem(categoryData) : PutItem(categoryData)
+      toggleFunc()
+    } else {
+      console.log("cancelled");
+    }
   };
 
   const PostItem = (data) => {

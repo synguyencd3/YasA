@@ -2,7 +2,7 @@ import { getToken } from "../../services/authService";
 import { categoryUrl } from "../../static/const";
 
 
-const CategoryCard = ({content, fetchFunc, openModalFunc, editContentFunc}) => {
+const CategoryCard = ({content, fetchFunc, openModalFunc, editContentFunc, setPageFunc}) => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
@@ -10,7 +10,10 @@ const CategoryCard = ({content, fetchFunc, openModalFunc, editContentFunc}) => {
         method: 'DELETE' ,
         headers: {Authorization: `Bearer ${getToken()}`}
       }).then(
-        () =>fetchFunc()
+        () =>{
+          setPageFunc(0)
+          fetchFunc()
+        }
       )
       console.log("Item deleted");
     } else {
