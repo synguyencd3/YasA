@@ -55,7 +55,7 @@ const ProductDetail = () => {
 			<div className="container-fliud">
 				<div className="row">
 					<div className="col-md-6">
-						  <div className="tab-pane active" id="pic-1"><img src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081" /></div>
+						  <div className="tab-pane active" id="pic-1"><img src={product && product.image!= null? product.image :`https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081`} /></div>
 					</div>
 					<div className="text-start col-md-5">
                         {product && <h3 className="product-title mt-4">{product.name}</h3>}
