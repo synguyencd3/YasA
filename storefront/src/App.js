@@ -6,6 +6,7 @@ import Storefront from './pages/storefront/storefront';
 import { BrowserRouter as Router, Routes, Route, redirect} from "react-router-dom";
 import { useState, useEffect } from "react"
 import { getToken } from './services/authService';
+import AuthPage from './pages/login/authPage';
 
 
 
@@ -17,7 +18,8 @@ function App() {
 }, [token])
 
   if(!token) {
-    return <Login setToken = {setToken}/>
+    //return <Login setToken = {setToken}/>
+    return <AuthPage setToken = {setToken}/>
   }
 
   return (

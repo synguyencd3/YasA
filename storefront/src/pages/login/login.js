@@ -1,7 +1,6 @@
 import { useState} from "react"
 import { setTokenToStorage } from "../../services/authService";
 import { loginUrl } from "../../static/const";
-import { Link } from "react-router-dom";
 
 async function loginUser(credentials) {
     return fetch(loginUrl, {

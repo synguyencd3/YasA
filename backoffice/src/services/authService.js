@@ -1,4 +1,3 @@
-import Login from "../login/login";
 
 export function getToken() {
     const tokenString = sessionStorage.getItem('token');

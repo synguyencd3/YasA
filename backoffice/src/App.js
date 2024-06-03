@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Login from './login/login';
 import { getToken } from './services/authService';
 import ProductGroup from './components/sideMenu/group objects/ProductGroup';
+import AuthPage from './login/authPage';
 
 
 
@@ -20,7 +21,7 @@ function App() {
 }, [token])
 
   if(!token) {
-    return <Login setToken = {setToken}/>
+    return <AuthPage setToken = {setToken}/>
   }
 
   return (
