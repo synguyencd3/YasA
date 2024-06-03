@@ -4,7 +4,7 @@ import { cartUrl } from "../static/const";
 import { getToken, logout } from "../services/authService";
 
 
-const Navbar = () => {
+const Navbar = ({setToken}) => {
 
   
   let [showModal, setShowModal] = useState(false);
@@ -43,7 +43,7 @@ const Navbar = () => {
           </a>
           <div>
           <button type="button" id="cartButton" className="btn btn-success" onClick={()=>handleOpenModal()}>Cart</button>
-          <button type="button" id="cartButton" className="btn btn-secondary mx-3" onClick={()=>logout()}>Logout</button>
+          <button type="button" id="cartButton" className="btn btn-secondary mx-3" onClick={()=>{setToken(false);logout()}}>Logout</button>
           </div>
         </div>
     </nav>

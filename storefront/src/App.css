@@ -6,10 +6,22 @@
   background-color: #cfe2ff;
 }
 
+.product-image{
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+}
+
 
 .product-description{
   height:150px; 
   min-height:200px;  
+}
+
+.card-img-top {
+  width: 100%;
+  height: 25vw;
+  object-fit: cover;
 }
 
 

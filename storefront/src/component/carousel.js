@@ -1,24 +1,35 @@
-const Carousel = ({products}) => {
+import ProductCard from "./productCard";
+import 'bootstrap/dist/css/bootstrap.css'; 
+import {Carousel, Card, Button} from "react-bootstrap"; 
+
+
+
+const FeaturedCarousel = ({products}) => {
+
+    const reduceProducts = (acc, cur, index) => {
+        const groupIndex = Math.floor(index / 3);
+        if (!acc[groupIndex]) acc[groupIndex] = [];
+        acc[groupIndex].push(cur);
+        console.log(acc);
+        return acc;
+      };
+
     return(
-    <div className="container-fluid">
-      <div id="carouselExampleIndicators" className="carousel slide">
-        <div className="carousel-inner">
-          {products && products.map((product)=>
-          <div className="carousel-item active" key={product.id}>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaBqXPJxDAvLfz-d0uNwJtxUSGKexAZfWzkknNlUdU0A&s" className="d-block w-100" />
-          </div>)}
-        </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
-      </div>
-      </div>
+    <Carousel>
+      {products && products.reduce(reduceProducts, []).map((item, index) => (
+        <Carousel.Item key={index}>
+          <div className="d-flex justify-content-center" key={index}>
+            {item.map((item, index) => {
+              return (
+                <ProductCard product={item}/>
+              );
+            })}
+          </div>
+        </Carousel.Item>
+      ))}
+    </Carousel>
+    
     )
 }
 
-export default Carousel;
+export default FeaturedCarousel;

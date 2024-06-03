@@ -1,6 +1,7 @@
 import { useState} from "react"
 import { setTokenToStorage } from "../../services/authService";
 import { loginUrl } from "../../static/const";
+import { Link } from "react-router-dom";
 
 async function loginUser(credentials) {
     return fetch(loginUrl, {
@@ -32,7 +33,7 @@ const Login = ({setToken}) => {
       }
 
     return(
-        <div className="login-wrapper">
+        <div className="container-sm mt-5 " style={{width: 500}}>
             <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label for="exampleInputEmail1">Username</label>
@@ -42,8 +43,9 @@ const Login = ({setToken}) => {
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" onChange={e => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder="Password"/>
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary mt-3">Submit</button>
             </form>
+            <a href={`/register`}>Register?</a>
         </div>
     )
 }

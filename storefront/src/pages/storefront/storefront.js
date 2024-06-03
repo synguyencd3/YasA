@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import CategoriesList from "./categories"
 import ProductsList from "./products"
-import Carousel from "../../component/carousel"
+import FeaturedCarousel from "../../component/carousel"
 import { categoryUrl, productUrl } from "../../static/const"
 
 const Storefront = ({handleCloseModal, showModal}) => {
@@ -74,7 +74,7 @@ const Storefront = ({handleCloseModal, showModal}) => {
 
     return (
         <div className="container-fluid mt-5">
-            <Carousel products={featuredProducts}/>
+            <FeaturedCarousel products={featuredProducts}/>
             <div className="row">
                 <div className="col-3 mt-5 pt-4">
                     <CategoriesList categories={categories} selectCategory={handleClick}/>
