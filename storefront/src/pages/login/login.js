@@ -11,7 +11,10 @@ async function loginUser(credentials) {
         },
         body: JSON.stringify(credentials)
     })
-        .then(data => data.json())
+        .then(response => {
+            if (response.ok) return response.json()
+            return Promise.reject(response)
+        })
    }
 
 const Login = ({setToken}) => {
@@ -22,13 +25,18 @@ const Login = ({setToken}) => {
         console.log(username);
         console.log(password);
         e.preventDefault();
-        const token = await loginUser({
+       loginUser({
           username,
           password
-        });
-        console.log(token);
-        setToken(token.accessKey);
-        setTokenToStorage(token.accessKey);
+        }).then((token) =>{
+            console.log(token);
+            setToken(token.accessKey);
+            setTokenToStorage(token.accessKey);
+        }).catch((response) => {
+           response.json().then((json) => {
+             alert(json.message);
+           })
+        })
       }
 
     return(
@@ -36,11 +44,11 @@ const Login = ({setToken}) => {
             <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label for="exampleInputEmail1">Username</label>
-                <input onChange={e => setUserName(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username"/>
+                <input onChange={e => setUserName(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" required/>
             </div>
             <div className="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" onChange={e => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                <input type="password" onChange={e => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder="Password" required/>
             </div>
             <button type="submit" className="btn btn-primary mt-3">Submit</button>
             </form>

@@ -11,7 +11,10 @@ async function loginUser(credentials) {
         },
         body: JSON.stringify(credentials)
     })
-        .then(data => data.json())
+    .then(response => {
+        if (response.ok) return response.json()
+        return Promise.reject(response)
+    })
    }
 
 const Login = ({setToken}) => {
@@ -25,10 +28,15 @@ const Login = ({setToken}) => {
         const token = await loginUser({
           username,
           password
-        });
-        console.log(token);
-        setToken(token.accessKey);
-        setTokenToStorage(token.accessKey);
+        }).then((token) =>{
+            console.log(token);
+            setToken(token.accessKey);
+            setTokenToStorage(token.accessKey);
+        }).catch((response) => {
+           response.json().then((json) => {
+             alert(json.message);
+           })
+        })
       }
 
     return(
