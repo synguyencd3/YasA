@@ -25,9 +25,9 @@ const Navbar = () => {
         <div className="modal show d-block" tabIndex="-1" role="dialog" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
           <div className="modal-dialog" role="document">
             <div className="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Cart</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleCloseModal}></button>
+            <div className="modal-header">
+              <h5 className="modal-title">Cart</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleCloseModal}></button>
             </div>
               <div className="modal-body">
                 <CartItems/>
