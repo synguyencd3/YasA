@@ -41,7 +41,8 @@ const NewProductForm = ({content,fetchFunc, toggleFunc}) => {
       price: price,
       description: description,
       image: url,
-      category: category
+      category: category,
+      featured: isFeatured,
     }
     console.log("fetching")
     console.log(data)
@@ -74,7 +75,8 @@ const NewProductForm = ({content,fetchFunc, toggleFunc}) => {
       price: price,
       description: description,
       image: url,
-      category: category
+      category: category,
+      featured: isFeatured
     }
     console.log("fetching")
     console.log(data)

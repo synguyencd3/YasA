@@ -17,7 +17,7 @@ function App() {
 
   useEffect(()=>{
     setToken(getToken());
-}, [])
+}, [token])
 
   if(!token) {
     return <Login setToken = {setToken}/>
@@ -25,7 +25,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header/>
+      <Header setToken={setToken}/>
       <div className="container-fluid mt-5">
         <div className="row">
           <div className="col-3">
