@@ -2,6 +2,7 @@ package com.nashtech.rookie.yasa.service;
 import com.nashtech.rookie.yasa.dto.request.CreateCategoryDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateCategoryDto;
 import com.nashtech.rookie.yasa.entity.Category;
+import com.nashtech.rookie.yasa.entity.Product;
 import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.CategoryMapper;
 import com.nashtech.rookie.yasa.service.category.CategoryServiceImpl;
@@ -12,10 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,14 +60,15 @@ public class CategoryServiceTest {
         Category category2 = new Category();
         category2.setName("test2");
         category2.setId(1);
+        List<Category> list = List.of(category1,category2);
 
-        Pageable pageable = PageRequest.of(0,99, Sort.by("id"));
+        Pageable pageable = PageRequest.of(0,2);
+        Page<Category> categoryPageTest = new PageImpl<>(list, pageable, list.size());
+        given(categoryRepository.findAll(any(Pageable.class))).willReturn(categoryPageTest);
+        var categoryPage = categoryService.getAll(0,99,"asc","id");
 
-        given(categoryRepository.findAll(pageable)).willReturn(any(Page.class));
-        var categoryList = categoryService.getAll(0,99);
-
-        assertThat(categoryList).isNotNull();
-       // assertThat(categoryList.size()).isEqualTo(2);
+        assertThat(categoryPage).isNotNull();
+        assertThat(categoryPage.getSize()).isEqualTo(2);
     }
 
     @Test
