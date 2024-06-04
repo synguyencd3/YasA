@@ -8,7 +8,7 @@ import { getToken } from './services/authService';
 import ProductGroup from './components/sideMenu/group objects/ProductGroup';
 import AuthPage from './login/authPage';
 import SortDropdown from './components/sideMenu/sort';
-
+import { app } from './firebase';
 
 
 function App() {

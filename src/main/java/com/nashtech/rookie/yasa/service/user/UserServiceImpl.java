@@ -99,4 +99,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(pageable).map(UserMapper.INSTANCE::toDto);
     }
 
+    @Override
+    public void banUser(String username) {
+        User user = userRepository.findByUsername(username);
+        user.setStatus("banned");
+        userRepository.save(user);
+    }
+
+    @Override
+    public void unbanUser(String username) {
+        User user = userRepository.findByUsername(username);
+        user.setStatus("active");
+        userRepository.save(user);
+    }
+
+
 }

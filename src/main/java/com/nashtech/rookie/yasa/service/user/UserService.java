@@ -13,4 +13,8 @@ public interface UserService {
     UserDto adminRegister(RegisterDto dto);
 
     Page<UserDto> getAllUser(int page, int size, String sort, String sortBy);
+
+    void banUser(String username);
+
+    void unbanUser(String username);
 }

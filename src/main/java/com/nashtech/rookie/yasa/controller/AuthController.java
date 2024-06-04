@@ -56,4 +56,11 @@ public class AuthController {
     ) {
         return ResponseEntity.ok(userService.getAllUser(page, size, sort, sortBy));
     }
+
+    @PostMapping("admin")
+    public ResponseEntity<String> banUser(@RequestParam() String username) {
+        userService.banUser(username);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { getToken } from "../../services/authService";
 
 const List = ({Card, url, Form, sort, sortBy}) => {
 
@@ -29,7 +30,9 @@ const List = ({Card, url, Form, sort, sortBy}) => {
 
     const fetchItem = () => {
         console.log(url+`?size=4&page=${page}&sort=${sort}&sortBy=${sortBy}`)
-        fetch(url+`?size=4&page=${page}&sort=${sort}&sortBy=${sortBy}`).then(res => {
+        fetch(url+`?size=4&page=${page}&sort=${sort}&sortBy=${sortBy}`, {
+          headers: {Authorization: `Bearer ${getToken()}`}
+        }).then(res => {
           return res.json()
       }).then((data) => {
         console.log(data)
@@ -67,8 +70,7 @@ const List = ({Card, url, Form, sort, sortBy}) => {
         </div>
       )}
 
-
-        <button type="button" className="btn btn-success mb-4" onClick={() =>{setEditContent(null);handleOpenModal()}}>Add</button>
+        {Form!=null ? <button type="button" className="btn btn-success mb-4" onClick={() =>{setEditContent(null);handleOpenModal()}}>Add</button>: <div></div> }
         <div className="Paging mx-4 mt-2">
             <nav aria-label="Page navigation example">
               <ul className="pagination">
