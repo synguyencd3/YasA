@@ -14,6 +14,7 @@ const ProductDetail = () => {
     let [lastPage, setLastPage] = useState(false);
     let [firstPage, setFirstPage] = useState(false);
 	let [commentForm, setCommentForm] = useState("")
+	let [stars, setStars] = useState(1); 
 
     const getProduct =() => {
         fetch(productUrl+`/${id}`).then(res => {
@@ -95,15 +96,7 @@ const ProductDetail = () => {
 					</div>
 					<div className="text-start col-md-5">
                         {product && <h3 className="product-title mt-4">{product.name}</h3>}
-						<div className="rating">
-							<div className="stars">
-								<span className="fa fa-star checked"></span>
-								<span className="fa fa-star checked"></span>
-								<span className="fa fa-star checked"></span>
-								<span className="fa fa-star"></span>
-								<span className="fa fa-star"></span>
-							</div>
-						</div>
+						{product && <h5 className="product-title mt-4">{product.rating.toFixed(1)}<span class="fa fa-star checked"></span></h5>}
 						{product && <p className="product-description mt-3">{product.description}</p>}
 						{product && <h4 className="price">current price: <span>{product.price}</span></h4>}
 						<button className="btn btn-primary mt-3" type="button" onClick={() =>addToCart()}>add to cart</button>
@@ -123,6 +116,15 @@ const ProductDetail = () => {
 				onChange={(e) =>setCommentForm(e.target.value)}
 				rows="5"></textarea>
 				</div>
+				
+					<h6 className='col-2'>Your rating: {stars} <span class="fa fa-star checked"></span></h6>
+					<div class="btn-group " role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-link" onClick={()=>setStars(1)}><span class="fa fa-star checked"></span></button>
+						<button type="button" class="btn btn-link" onClick={()=>setStars(2)}><span class="fa fa-star checked"></span></button>
+						<button type="button" class="btn btn-link" onClick={()=>setStars(3)}><span class="fa fa-star checked"></span></button>
+						<button type="button" class="btn btn-link" onClick={()=>setStars(4)}><span class="fa fa-star checked"></span></button>
+						<button type="button" class="btn btn-link" onClick={()=>setStars(5)}><span class="fa fa-star checked"></span></button>
+					</div>
 			</div>
 		<button type="submit" class="btn btn-primary mt-2">Submit</button>
 		</form>
