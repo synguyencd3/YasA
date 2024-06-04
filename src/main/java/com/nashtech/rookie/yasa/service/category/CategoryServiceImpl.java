@@ -21,8 +21,9 @@ public class CategoryServiceImpl implements CategoryService{
     @Autowired
     private CategoryRepository categoryRepository;
     @Override
-    public Page<CategoryDto> getAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page,size, Sort.by("id"));
+    public Page<CategoryDto> getAll(int page, int size, String sort, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page,size, Sort.by(sortDirection,sortBy));
         return categoryRepository.findAll(pageable).map(CategoryMapper.INSTANCE::toDto);
     }
 

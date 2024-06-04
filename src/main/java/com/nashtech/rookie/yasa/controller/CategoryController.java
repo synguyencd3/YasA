@@ -22,9 +22,11 @@ public class CategoryController {
     @CrossOrigin
     public ResponseEntity<Page<CategoryDto>> getAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "asc") String sort,
+            @RequestParam(defaultValue = "id") String sortBy
     ) {
-        return ResponseEntity.ok(categoryService.getAll(page, size));
+        return ResponseEntity.ok(categoryService.getAll(page, size, sort, sortBy));
     }
 
     @PostMapping()

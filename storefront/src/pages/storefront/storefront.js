@@ -4,6 +4,7 @@ import ProductsList from "./products"
 import FeaturedCarousel from "../../component/carousel"
 import { categoryUrl, productUrl } from "../../static/const"
 import Dropdown from 'react-bootstrap/Dropdown';
+import SortDropdown from "../../component/sort"
 
 const Storefront = ({handleCloseModal, showModal}) => {
 
@@ -69,32 +70,12 @@ const Storefront = ({handleCloseModal, showModal}) => {
             <FeaturedCarousel products={featuredProducts}/>
             <div className="row">
                 <div className="col-3 mt-5 pt-4">
-                    <CategoriesList categories={categories} selectCategory={handleClick}/>
-                <Dropdown className="mt-3">
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    Sort By
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item href="#/default" onClick={() =>setSortBy("id")}>Default</Dropdown.Item>
-                    <Dropdown.Item href="#/name" onClick={() =>setSortBy("name")}>Name</Dropdown.Item>
-                    <Dropdown.Item href="#/price" onClick={() =>setSortBy("price")}>Price</Dropdown.Item>
-                </Dropdown.Menu>
-                </Dropdown>
-
-                <Dropdown className="mt-3">
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    Sort
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item href="#/asc" onClick={() =>setSort("asc")}>Ascending</Dropdown.Item>
-                    <Dropdown.Item href="#/desc" onClick={() =>setSort("desc")}>Descending</Dropdown.Item>
-                </Dropdown.Menu>
-                </Dropdown>
+                <CategoriesList categories={categories} selectCategory={handleClick}/>
+                <SortDropdown setSort={setSort} setSortBy={setSortBy}/>
                 </div>
 
                 <div className="col-9 gx-5">
-                <ProductsList products={products} setSort={setSort} setSortBy={setSortBy}/>
+                <ProductsList products={products}/>
 
                 
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 
-const List = ({Card, url, Form}) => {
+const List = ({Card, url, Form, sort, sortBy}) => {
 
     const [showModal, setShowModal] = useState(false);
     let [contents, setContents] = useState(null);
@@ -28,8 +28,8 @@ const List = ({Card, url, Form}) => {
     }
 
     const fetchItem = () => {
-        console.log("page "+page)
-        fetch(url+`?size=4&page=${page}`).then(res => {
+        console.log(url+`?size=4&page=${page}&sort=${sort}&sortBy=${sortBy}`)
+        fetch(url+`?size=4&page=${page}&sort=${sort}&sortBy=${sortBy}`).then(res => {
           return res.json()
       }).then((data) => {
         console.log(data)
@@ -42,11 +42,11 @@ const List = ({Card, url, Form}) => {
     useMemo(() => {
       setContents(null)
       setPage(0)
-    }, [Card])
+    }, [Card, sort, sortBy])
   
     useEffect( () => {
       fetchItem();
-    }, [page, Card])
+    }, [page, Card, sort, sortBy])
   
       return(
       <div>
