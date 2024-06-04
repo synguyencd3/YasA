@@ -17,10 +17,11 @@ public class User extends Audit {
     @Column(nullable = false,length = 1024)
     private String secret;
     @Column(nullable = false)
+    private String status;
+    @Column(nullable = false)
     private String role;
     @Column(nullable = false, length = 1024)
     private String salt;
-
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Cart cart;
 }

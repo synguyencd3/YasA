@@ -15,6 +15,10 @@ import com.nashtech.rookie.yasa.util.SHA521Hasher;
 import jakarta.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
@@ -87,4 +91,12 @@ public class UserServiceImpl implements UserService {
     public UserDto adminRegister(RegisterDto dto) {
         return register(dto,"admin");
     }
+
+    @Override
+    public Page<UserDto> getAllUser(int page, int size, String sort, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection,sortBy));
+        return userRepository.findAll(pageable).map(UserMapper.INSTANCE::toDto);
+    }
+
 }

@@ -6,6 +6,7 @@ import com.nashtech.rookie.yasa.dto.response.UserDto;
 import com.nashtech.rookie.yasa.service.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,5 +45,15 @@ public class AuthController {
     public ResponseEntity<UserDto> adminRegister(@RequestBody @Valid RegisterDto dto)
     {
         return ResponseEntity.ok(userService.adminRegister(dto));
+    }
+
+    @GetMapping("admin")
+    public ResponseEntity<Page<UserDto>> getAllUser(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "asc") String sort,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+        return ResponseEntity.ok(userService.getAllUser(page, size, sort, sortBy));
     }
 }
