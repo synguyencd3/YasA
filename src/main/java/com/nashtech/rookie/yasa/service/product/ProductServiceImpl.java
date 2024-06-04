@@ -24,8 +24,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public Page<ProductDto> getAllProducts(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+    public Page<ProductDto> getAllProducts(int page, int size, String sort, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection,sortBy));
         return productRepository.findAll(pageable).map(ProductMapper.INSTANCE::toDto);
     }
 
@@ -42,8 +43,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDto> getAllInCategory(int id, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+    public Page<ProductDto> getAllInCategory(int id, int page, int size, String sort, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection,sortBy));
         return productRepository.findByCategory_Id(id, pageable).map(ProductMapper.INSTANCE::toDto);
     }
 

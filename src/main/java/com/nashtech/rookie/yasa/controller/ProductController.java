@@ -24,11 +24,13 @@ public class ProductController {
     public ResponseEntity<Page<ProductDto>> getAll(
             @RequestParam(required = false, name="category") Integer category,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "asc") String sort,
+            @RequestParam(defaultValue = "id") String sortBy
     ) {
         if (category!= null)
-            return ResponseEntity.ok(productService.getAllInCategory(category, page, size));
-        return ResponseEntity.ok(productService.getAllProducts(page,size));
+            return ResponseEntity.ok(productService.getAllInCategory(category, page, size, sort, sortBy));
+        return ResponseEntity.ok(productService.getAllProducts(page,size,sort,sortBy));
     }
 
     @PostMapping

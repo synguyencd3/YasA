@@ -3,6 +3,7 @@ import CategoriesList from "./categories"
 import ProductsList from "./products"
 import FeaturedCarousel from "../../component/carousel"
 import { categoryUrl, productUrl } from "../../static/const"
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const Storefront = ({handleCloseModal, showModal}) => {
 
@@ -13,6 +14,8 @@ const Storefront = ({handleCloseModal, showModal}) => {
     let [page, setPage] = useState(0);
     let [lastPage, setLastPage] = useState(false);
     let [firstPage, setFirstPage] = useState(false);
+    let [sort, setSort] = useState("asc");
+    let [sortBy, setSortBy] = useState("id");
 
     const getCategories = () => {
         fetch(categoryUrl).then(res => {
@@ -24,7 +27,7 @@ const Storefront = ({handleCloseModal, showModal}) => {
     }
 
     const getProducts = ()  => {
-        let fetchUrl = productUrl+`?size=6&page=${page}`
+        let fetchUrl = productUrl+`?size=6&page=${page}&sort=${sort}&sortBy=${sortBy}`
         if (category != null ) fetchUrl=fetchUrl +`&category=${category.id}`
         fetch(fetchUrl).then(res => {
             return res.json()
@@ -37,17 +40,6 @@ const Storefront = ({handleCloseModal, showModal}) => {
         })
     }
 
-    // const filterByCategory = (category) => {
-    //     fetch(productUrl+`?category=${category.id}&size=6&page=${page}`).then(res => {
-    //         return res.json()
-    //     }).then((data) => {
-    //         console.log(data)
-    //         setLastPage(data.last)
-    //         setFirstPage(data.first)
-    //         setProducts(data.content)
-    //     })
-    // }
-    
     const filterIsFeaturedProducts = (products) =>{
         const filteredProduct = products.filter((product) => product.featured)
         setFeaturedProducts(filteredProduct)
@@ -55,8 +47,8 @@ const Storefront = ({handleCloseModal, showModal}) => {
 
     useEffect( ()=>{
         getProducts()
-        getCategories();
-    }, [page, category])
+        getCategories()
+    }, [page, category, sort, sortBy])
 
     const handleClick = (category) => {
         setCategory(category)
@@ -78,10 +70,33 @@ const Storefront = ({handleCloseModal, showModal}) => {
             <div className="row">
                 <div className="col-3 mt-5 pt-4">
                     <CategoriesList categories={categories} selectCategory={handleClick}/>
+                <Dropdown className="mt-3">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Sort By
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item href="#/default" onClick={() =>setSortBy("id")}>Default</Dropdown.Item>
+                    <Dropdown.Item href="#/name" onClick={() =>setSortBy("name")}>Name</Dropdown.Item>
+                    <Dropdown.Item href="#/price" onClick={() =>setSortBy("price")}>Price</Dropdown.Item>
+                </Dropdown.Menu>
+                </Dropdown>
+
+                <Dropdown className="mt-3">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Sort
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item href="#/asc" onClick={() =>setSort("asc")}>Ascending</Dropdown.Item>
+                    <Dropdown.Item href="#/desc" onClick={() =>setSort("desc")}>Descending</Dropdown.Item>
+                </Dropdown.Menu>
+                </Dropdown>
                 </div>
 
                 <div className="col-9 gx-5">
-                <ProductsList products={products}/>
+                <ProductsList products={products} setSort={setSort} setSortBy={setSortBy}/>
+
+                
 
                 <div className="Paging mx-4 mt-2">
                 <nav aria-label="Page navigation example">

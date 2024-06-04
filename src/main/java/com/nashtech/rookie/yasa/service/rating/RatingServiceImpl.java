@@ -51,7 +51,8 @@ public class RatingServiceImpl implements RatingService{
 
     @Override
     public Page<RatingDto> getByProduct(int productId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        Sort.Direction sortDirection = Sort.Direction.fromString("desc");
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection,"id"));
         return ratingRepository.findByProductId(productId,pageable).map(RatingMapper.INSTANCE::toDto);
     }
 

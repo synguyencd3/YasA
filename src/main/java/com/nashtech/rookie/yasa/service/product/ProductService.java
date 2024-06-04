@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    public Page<ProductDto> getAllProducts(int page, int size);
+    public Page<ProductDto> getAllProducts(int page, int size, String sort, String sortBy);
     public ProductDto createProduct(CreateProductDto dto);
 
     public ProductDto getProduct(int id);
 
-    public Page<ProductDto> getAllInCategory(int id, int page, int size);
+    public Page<ProductDto> getAllInCategory(int id, int page, int size, String sort, String sortBy);
 
     public ProductDto updateProduct(int id, UpdateProductDto dto);
 

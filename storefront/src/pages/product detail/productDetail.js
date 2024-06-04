@@ -50,8 +50,8 @@ const ProductDetail = () => {
 		console.log(commentForm)
 		let data = {
 			content : commentForm,
-			score : 0,
-			product: id
+			score : stars,
+			product: id,
 		}
 		fetch(ratingUrl, {
 			method: 'POST',
@@ -60,7 +60,12 @@ const ProductDetail = () => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data)
-		}).then(()=>getComments())
+		}).then(()=>
+			{
+				setStars(1)
+				setCommentForm("")
+				getComments()
+			})
 	}
 
 	const addToCart = () => {
@@ -108,6 +113,15 @@ const ProductDetail = () => {
 
 		<form onSubmit={rating}>
 			<div class="form-group mt-3">
+
+			<div class="btn-group " role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-link" onClick={()=>setStars(1)}><span class="fa fa-star checked"></span></button>
+				<button type="button" class="btn btn-link" onClick={()=>setStars(2)}><span class="fa fa-star checked"></span></button>
+				<button type="button" class="btn btn-link" onClick={()=>setStars(3)}><span class="fa fa-star checked"></span></button>
+				<button type="button" class="btn btn-link" onClick={()=>setStars(4)}><span class="fa fa-star checked"></span></button>
+				<button type="button" class="btn btn-link" onClick={()=>setStars(5)}><span class="fa fa-star checked"></span></button>
+			</div>
+
 				<div class="col">
 				<textarea 
 				class="form-control" 
@@ -117,14 +131,7 @@ const ProductDetail = () => {
 				rows="5"></textarea>
 				</div>
 				
-					<h6 className='col-2'>Your rating: {stars} <span class="fa fa-star checked"></span></h6>
-					<div class="btn-group " role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-link" onClick={()=>setStars(1)}><span class="fa fa-star checked"></span></button>
-						<button type="button" class="btn btn-link" onClick={()=>setStars(2)}><span class="fa fa-star checked"></span></button>
-						<button type="button" class="btn btn-link" onClick={()=>setStars(3)}><span class="fa fa-star checked"></span></button>
-						<button type="button" class="btn btn-link" onClick={()=>setStars(4)}><span class="fa fa-star checked"></span></button>
-						<button type="button" class="btn btn-link" onClick={()=>setStars(5)}><span class="fa fa-star checked"></span></button>
-					</div>
+				<h6 className='col-2'>Your rating: {stars} <span class="fa fa-star checked"></span></h6>
 			</div>
 		<button type="submit" class="btn btn-primary mt-2">Submit</button>
 		</form>

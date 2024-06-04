@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { categoryUrl } from "../../static/const";
-
 
 const CategoriesList = ({categories, selectCategory}) => {
 

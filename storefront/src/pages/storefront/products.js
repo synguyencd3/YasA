@@ -2,6 +2,7 @@ import ProductCard from "../../component/productCard";
 import { getToken } from "../../services/authService";
 import { cartUrl } from "../../static/const";
 
+
 const ProductsList = ({products}) => {
 
     const addToCart = (product) => {
