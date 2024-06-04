@@ -7,6 +7,7 @@ import com.nashtech.rookie.yasa.entity.Product;
 import com.nashtech.rookie.yasa.entity.Rating;
 import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.RatingMapper;
+import com.nashtech.rookie.yasa.repository.ProductRepository;
 import com.nashtech.rookie.yasa.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,21 +15,34 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 @Service
 public class RatingServiceImpl implements RatingService{
     @Autowired
     private RatingRepository ratingRepository;
+    @Autowired
+    private ProductRepository productRepository;
     @Override
     public RatingDto createRating(CreateRatingDto dto) {
         Rating rating = RatingMapper.INSTANCE.toEntity(dto);
+        int productId = rating.getProduct().getId();
+        Product product = productRepository.findById(productId).orElseThrow(() ->new NotFoundException("Product not found"));
+        product.setRating(updateScore(product));
+        productRepository.save(product);
         rating = ratingRepository.save(rating);
         return RatingMapper.INSTANCE.toDto(rating);
     }
 
+    private float updateScore(Product product) {
+        List<Rating> ratings = ratingRepository.findByProductId(product.getId());
+        OptionalDouble avg = ratings.stream().mapToDouble(Rating::getScore).average();
+        return (float) avg.getAsDouble();
+    }
     @Override
     public Page<RatingDto> getAll( int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));

@@ -25,8 +25,9 @@ public class Product extends Audit{
 
     @Column(name="is_featured", nullable = false)
     private boolean isFeatured = false;
-//    @Column(name="average_rating")
-//    private float rating;
+
+    @Column(name="average_rating")
+    private float rating;
 
     @ManyToOne
     @JoinColumn(name="category_id", referencedColumnName = "id")

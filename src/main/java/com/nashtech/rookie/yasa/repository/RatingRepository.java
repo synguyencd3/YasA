@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface RatingRepository extends JpaRepository<Rating, Integer> {
     Page<Rating> findByProductId(int id, Pageable pageable);
+
+    List<Rating> findByProductId(int id);
     Page<Rating> findByUserId(int id, Pageable pageable);
     Page<Rating> findByUserIdAndProductId(int userId, int productId, Pageable pageable);
 }

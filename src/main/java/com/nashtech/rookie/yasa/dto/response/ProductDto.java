@@ -16,6 +16,7 @@ public class ProductDto {
     private int price;
     private String description;
     private String image;
+    private float rating;
     private Category category;
     private boolean isFeatured;
     private LocalDateTime createdOn;
