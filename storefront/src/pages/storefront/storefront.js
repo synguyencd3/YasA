@@ -19,7 +19,7 @@ const Storefront = ({handleCloseModal, showModal}) => {
     let [sortBy, setSortBy] = useState("id");
 
     const getCategories = () => {
-        fetch(categoryUrl).then(res => {
+        fetch(categoryUrl+`?size=99&page=0`).then(res => {
             return res.json()
         }).then((data) => {
             data.content.sort((a,b) => (a.id-b.id))

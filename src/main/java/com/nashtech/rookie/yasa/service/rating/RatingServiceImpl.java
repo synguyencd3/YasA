@@ -32,9 +32,9 @@ public class RatingServiceImpl implements RatingService{
         Rating rating = RatingMapper.INSTANCE.toEntity(dto);
         int productId = rating.getProduct().getId();
         Product product = productRepository.findById(productId).orElseThrow(() ->new NotFoundException("Product not found"));
+        rating = ratingRepository.save(rating);
         product.setRating(updateScore(product));
         productRepository.save(product);
-        rating = ratingRepository.save(rating);
         return RatingMapper.INSTANCE.toDto(rating);
     }
 

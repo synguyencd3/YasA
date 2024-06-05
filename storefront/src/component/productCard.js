@@ -7,7 +7,7 @@ const ProductCard = ({product,addToCartFunc}) => {
                 <div className="card-body">
                 <div className="text-center">
                     <a href={`products/${product.id}`}><h5 className="card-title">{product.name}</h5></a>
-                    <p className="card-text">{product.description}</p>
+                    <p className="card-text text-truncate">{product.description}</p>
                     <p><b>{product.price}</b>VND</p>
                 </div>
                 <button type="button" className="btn btn-dark" onClick={() => addToCartFunc(product)}>Add to cart</button>

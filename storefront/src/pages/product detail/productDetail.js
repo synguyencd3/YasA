@@ -102,7 +102,7 @@ const ProductDetail = () => {
 					<div className="text-start col-md-5">
                         {product && <h3 className="product-title mt-4">{product.name}</h3>}
 						{product && <h5 className="product-title mt-4">{product.rating.toFixed(1)}<span class="fa fa-star checked"></span></h5>}
-						{product && <p className="product-description mt-3">{product.description}</p>}
+						{product && <p className="product-description mt-3 overflow-auto">{product.description}</p>}
 						{product && <h4 className="price">current price: <span>{product.price}</span></h4>}
 						<button className="btn btn-primary mt-3" type="button" onClick={() =>addToCart()}>add to cart</button>
 					</div>
@@ -127,6 +127,7 @@ const ProductDetail = () => {
 				class="form-control" 
 				value={commentForm}
 				placeholder="Please enter your feedback here..." 
+				maxlength="250"
 				onChange={(e) =>setCommentForm(e.target.value)}
 				rows="5"></textarea>
 				</div>

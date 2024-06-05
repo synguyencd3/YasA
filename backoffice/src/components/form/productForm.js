@@ -5,7 +5,7 @@ import { getToken } from '../../services/authService';
 
 const NewProductForm = ({content,fetchFunc, toggleFunc}) => {
   const [productName, setProductName] = useState(content==null? '' : content.name);
-  const [category, setCategory] = useState(content==null ? '' : content.category);
+  const [category, setCategory] = useState(content==null ? 1 : content.category);
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState(content == null ? '': content.description);
   const [price, setPrice] = useState(content==null?'':content.price);
