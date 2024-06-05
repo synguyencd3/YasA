@@ -1,6 +1,7 @@
 package com.nashtech.rookie.yasa.controller;
 
 import com.nashtech.rookie.yasa.dto.request.CreateCategoryDto;
+import com.nashtech.rookie.yasa.dto.request.UpdateCategoryDto;
 import com.nashtech.rookie.yasa.dto.response.CategoryDto;
 import com.nashtech.rookie.yasa.dto.response.ProductDto;
 import com.nashtech.rookie.yasa.service.category.CategoryServiceImpl;
@@ -84,6 +85,18 @@ public class CategoryControllerTest {
         dto.setName("test");
         when(categoryService.createCategory(dto)).thenReturn(sample);
         var actual = categoryController.newCategory(dto);
+
+        assertNotNull(actual.getBody());
+        assertThat(actual.getBody()).isEqualTo(sample);
+    }
+
+    @Test
+    public void updateCategory() {
+        var sample = getSampleCategory();
+        var dto  = new UpdateCategoryDto();
+        dto.setName("test");
+        when(categoryService.updateCategory(1,dto)).thenReturn(sample);
+        var actual = categoryController.updateCategory(1,dto);
 
         assertNotNull(actual.getBody());
         assertThat(actual.getBody()).isEqualTo(sample);
