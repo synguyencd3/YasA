@@ -2,7 +2,6 @@ package com.nashtech.rookie.yasa.service;
 import com.nashtech.rookie.yasa.dto.request.CreateCategoryDto;
 import com.nashtech.rookie.yasa.dto.request.UpdateCategoryDto;
 import com.nashtech.rookie.yasa.entity.Category;
-import com.nashtech.rookie.yasa.entity.Product;
 import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.CategoryMapper;
 import com.nashtech.rookie.yasa.service.category.CategoryServiceImpl;
@@ -37,10 +36,6 @@ public class CategoryServiceTest {
     public void reset_mock() {
 
         categoryService = mock(CategoryServiceImpl.class);
-
-        Category Category = new Category();
-        Category.setId(1);
-        Category.setName("test");
     }
 
     public Category setUp() {
@@ -82,10 +77,6 @@ public class CategoryServiceTest {
     @Test
     public void whenGivenId_shouldUpdateCategory_ifFound() {
 
-        //init Category
-//        Category Category = new Category();
-//        Category.setId(1);
-//        Category.setName("test");
 
         var Category = setUp();
 
@@ -104,9 +95,7 @@ public class CategoryServiceTest {
 
     @Test
     public void whenGivenId_deleteCategory() {
-//        Category Category = new Category();
-//        Category.setName("test");
-//        Category.setId(1);
+
         var Category = setUp();
 
         when(categoryRepository.findById(Category.getId())).thenReturn(Optional.of(Category));
