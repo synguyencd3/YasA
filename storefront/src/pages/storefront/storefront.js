@@ -37,18 +37,25 @@ const Storefront = ({handleCloseModal, showModal}) => {
             setLastPage(data.last)
             setFirstPage(data.first)
             setProducts(data.content)
-            filterIsFeaturedProducts(data.content)
+
         })
     }
 
-    const filterIsFeaturedProducts = (products) =>{
-        const filteredProduct = products.filter((product) => product.featured)
+    const getFeaturedProducts = () =>{
+        let fetchUrl = productUrl+`?size=12&page=0`
+        fetch(fetchUrl).then(res => {
+            return res.json()
+        }).then((data) => {
+            console.log(data)
+            const filteredProduct = data.content.filter((data) => data.featured)
         setFeaturedProducts(filteredProduct)
+        })
     }
 
     useEffect( ()=>{
         getProducts()
         getCategories()
+        getFeaturedProducts()
     }, [page, category, sort, sortBy])
 
     const handleClick = (category) => {

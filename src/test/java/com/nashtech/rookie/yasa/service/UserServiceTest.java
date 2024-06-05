@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -54,8 +55,6 @@ public class UserServiceTest {
         sample.setId(1);
         return sample;
     }
-
-    public Page<UserDto>
 
     @Test
     public void RegsiterTest() {

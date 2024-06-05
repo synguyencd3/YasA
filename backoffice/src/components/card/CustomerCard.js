@@ -3,10 +3,30 @@ import { getAll } from "../../static/const"
 
 const CustomerCard = ({content, fetchFunc, openModalFunc, editContentFunc, setPageFunc}) => {
 
-    const handleBan = (id) => {
+    const handleBan = (username) => {
+      if (window.confirm("Are you sure you want to ban this user?")) {
+        fetch(getAll+`/${username}`, { 
+          method: 'DELETE' ,
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'Access-Control-Allow-Origin': '*'
+        }
+        }).then(
+          () =>{
+            setPageFunc(0)
+            fetchFunc()
+          }
+        )
+        console.log("Item deleted");
+      } else {
+        console.log("Deletion cancelled");
+      }
+    }
+
+    const handleUnban = (id) => {
       if (window.confirm("Are you sure you want to ban this user?")) {
         fetch(getAll+`/${id}`, { 
-          method: 'Post' ,
+          method: 'PATCH' ,
           headers: {Authorization: `Bearer ${getToken()}`}
         }).then(
           () =>{
@@ -27,7 +47,7 @@ const CustomerCard = ({content, fetchFunc, openModalFunc, editContentFunc, setPa
           <div className ="row">
               <div className="col-1"><h6>ID</h6></div>
               <div className="col"><h6>Name</h6></div>
-              <div className="col"><h6>Usernamer</h6></div>
+              <div className="col"><h6>Username</h6></div>
               <div className="col"><h6>Status</h6></div>
               <div className="col"><h6>Role</h6></div>
               <div className="col h6">Created On</div>
@@ -46,8 +66,8 @@ const CustomerCard = ({content, fetchFunc, openModalFunc, editContentFunc, setPa
           </div>
         </div>
         {content.status == "active" ?
-        <a href="#" className="btn btn-danger mx-1" onClick={() => handleBan(content.id)}>Ban</a>:
-        <a href="#" className="btn btn-danger mx-1" onClick={() => handleBan(content.id)}>Unban</a>}
+        <a href="#" className="btn btn-danger mx-1" onClick={() => handleBan(content.username)}>Ban</a>:
+        <a href="#" className="btn btn-danger mx-1" onClick={() => handleUnban(content.username)}>Unban</a>}
       </div>
     </div>
       )

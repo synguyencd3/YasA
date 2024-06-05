@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
     public UserDto login(LoginDto dto) {
             User user = userRepository.findByUsername(dto.getUsername());
             if (user == null ) throw new CantLoginException("User not found") ;
+            if (user.getStatus().equals("banned")) throw new CantLoginException("User banned");
             byte[] salt = Base64.getDecoder().decode(user.getSalt());
             if (SHA521Hasher.checkPassword(user.getSecret(), dto.getPassword(), salt)) {
                 UserDto responseDto = UserMapper.INSTANCE.toDto(user);
@@ -100,18 +101,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void banUser(String username) {
+    public void setStatus(String username,boolean status) {
         User user = userRepository.findByUsername(username);
-        user.setStatus("banned");
+        if (status) user.setStatus("active"); else user.setStatus("banned");
         userRepository.save(user);
     }
 
-    @Override
-    public void unbanUser(String username) {
-        User user = userRepository.findByUsername(username);
-        user.setStatus("active");
-        userRepository.save(user);
-    }
+
 
 
 }

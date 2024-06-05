@@ -36,12 +36,17 @@ public class JWTService {
                 .withClaim("userId", user.getId())
                 .withClaim("cartId", user.getCart().getId())
                 .withClaim("name", user.getName())
+                .withClaim("status", user.getStatus())
                 .withClaim("role", user.getRole())
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expireInMs))
                 .withJWTId(UUID.randomUUID()
                         .toString())
                 .sign(algorithm);
+    }
+
+    private static boolean isBanned(String token) {
+        return(getStatus(token).equals("banned"));
     }
 
     private static DecodedJWT verifyJWT(String jwtToken) {
@@ -69,7 +74,7 @@ public class JWTService {
     }
 
     public static boolean validate(String token) {
-        if (getUsername(token) != null && isExpired(token)) {
+        if (getUsername(token) != null && isExpired(token) && !isBanned(token)) {
             return true;
         }
         return false;
@@ -89,5 +94,6 @@ public class JWTService {
     }
     public static String getRole(String token) {return decodedJWT(token).getClaim("role").asString();}
     public static int getCart(String token) {return decodedJWT(token).getClaim("cartId").asInt();}
+    public static String getStatus (String token) { return decodedJWT(token).getClaim("status").asString();}
     
 }

@@ -57,9 +57,15 @@ public class AuthController {
         return ResponseEntity.ok(userService.getAllUser(page, size, sort, sortBy));
     }
 
-    @PostMapping("admin")
-    public ResponseEntity<String> banUser(@RequestParam() String username) {
-        userService.banUser(username);
+    @DeleteMapping("admin/{username}")
+    public ResponseEntity<String> banUser(@PathVariable(required = true) String username) {
+        userService.setStatus(username,false);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("admin/{username}")
+    public ResponseEntity<String> unbanUser(@PathVariable(required = true) String username) {
+        userService.setStatus(username,true);
         return ResponseEntity.noContent().build();
     }
 

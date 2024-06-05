@@ -14,7 +14,6 @@ public interface UserService {
 
     Page<UserDto> getAllUser(int page, int size, String sort, String sortBy);
 
-    void banUser(String username);
+    void setStatus(String username,boolean status);
 
-    void unbanUser(String username);
 }
