@@ -9,7 +9,7 @@
 .product-image{
   width: 500px;
   height: 500px;
-  object-fit: cover;
+  object-fit: scale-down;
 }
 
 
@@ -20,8 +20,8 @@
 
 .card-img-top {
   width: 100%;
-  height: 25vw;
-  object-fit: cover;
+  height: 20vw;
+  object-fit: scale-down;
 }
 
 .checked {

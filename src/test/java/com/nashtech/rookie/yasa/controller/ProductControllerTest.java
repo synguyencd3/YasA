@@ -56,7 +56,7 @@ public class ProductControllerTest {
         ProductDto sampleProduct2 = new ProductDto();
         sampleProduct2.setId(2);
         sampleProduct2.setName("test");
-        
+
 
         var productList = List.of(sampleProduct1,sampleProduct2);
         Sort.Direction sortDirection = Sort.Direction.fromString("asc");
