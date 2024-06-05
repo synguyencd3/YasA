@@ -1,10 +1,10 @@
 package com.nashtech.rookie.yasa.controller;
 
 
+import com.nashtech.rookie.yasa.dto.request.CreateProductDto;
+import com.nashtech.rookie.yasa.dto.request.UpdateProductDto;
 import com.nashtech.rookie.yasa.dto.response.ProductDto;
-import com.nashtech.rookie.yasa.entity.Product;
-import com.nashtech.rookie.yasa.repository.ProductRepository;
-import com.nashtech.rookie.yasa.service.product.ProductService;
+import com.nashtech.rookie.yasa.entity.Category;
 import com.nashtech.rookie.yasa.service.product.ProductServiceImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,11 +50,15 @@ public class ProductControllerTest {
 
     private Page<ProductDto> getSamplePage() {
         ProductDto sampleProduct1 = new ProductDto();
+        Category category = new Category();
+        category.setId(3);
         sampleProduct1.setId(1);
         sampleProduct1.setName("test");
+        sampleProduct1.setCategory(category);
         ProductDto sampleProduct2 = new ProductDto();
         sampleProduct2.setId(2);
         sampleProduct2.setName("test");
+        sampleProduct2.setCategory(category);
 
 
         var productList = List.of(sampleProduct1,sampleProduct2);
@@ -81,4 +84,23 @@ public class ProductControllerTest {
         assertThat(actualPage.getBody()).isEqualTo(samplePage);
     }
 
+    @Test
+    public void testGetAllInCategory() {
+        var samplePage = getSamplePage();
+        when(productService.getAllInCategory(3,0,2,"asc","id")).thenReturn(samplePage);
+        var actualPage = productController.getAll(3,0,2,"asc","id");
+
+        assertThat(actualPage.getBody()).isEqualTo(samplePage);
+    }
+
+    @Test
+    public void testAddProduct() {
+        var sampleProduct = getSampleProduct();
+        var dto = new CreateProductDto();
+        dto.setName("test");
+        when(productService.createProduct(dto)).thenReturn(sampleProduct);
+        var actual = productController.createProduct(dto);
+
+        assertThat(actual.getBody()).isEqualTo(sampleProduct);
+    }
 }
