@@ -13,6 +13,7 @@ public class UserDto {
     private int id;
     private String name;
     private String username;
+    private String status;
     private String role;
     private CartDto cart;
     private String accessKey;

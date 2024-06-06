@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 public class CreateRatingDto {
 
-    @NotBlank(message = "product is required")
-    private Product product;
+    @NotNull(message = "product is required")
+    private int product;
     @NotNull(message = "rating user is required")
     private int userId;
     private float score;

@@ -7,6 +7,7 @@ import com.nashtech.rookie.yasa.service.product.ProductService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,22 @@ import java.util.List;
 import java.util.Optional;
 @RestController
 @RequestMapping("/api/products")
+@CrossOrigin
 public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping()
     @CrossOrigin
-    public ResponseEntity<List<ProductDto>> getAll(@RequestParam(required = false, name="category") Integer category) {
+    public ResponseEntity<Page<ProductDto>> getAll(
+            @RequestParam(required = false, name="category") Integer category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "asc") String sort,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
         if (category!= null)
-            return ResponseEntity.ok(productService.getAllInCategory(category));
-        return ResponseEntity.ok(productService.getAllProducts());
+            return ResponseEntity.ok(productService.getAllInCategory(category, page, size, sort, sortBy));
+        return ResponseEntity.ok(productService.getAllProducts(page,size,sort,sortBy));
     }
 
     @PostMapping
@@ -41,6 +49,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @CrossOrigin
     public ResponseEntity<ProductDto> updateProduct(@PathVariable("id")  @Min(value = 1, message = "invalid product id")int id,@RequestBody @Valid UpdateProductDto product) {
         return ResponseEntity.ok(productService.updateProduct(id, product));
     }

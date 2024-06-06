@@ -12,9 +12,17 @@ public interface CartService {
 
     CartDto getCart(int id);
 
+    CartDto getCart(String bearerToken);
+
     CartDto addToCart(int cartId, CartItemDto cartItem);
+
+    CartDto addToCart(String bearerToken, CartItemDto cartItem);
 
     CartDto removeProductFromCart(int cartId, int productId);
 
+    CartDto removeProductFromCart(String bearerToken,int productId);
+
     CartDto updateProductQuantity(int cartId, int productId, CartUpdateQuantityDto dto);
+
+    CartDto updateProductQuantity(String bearerToken, int productId, CartUpdateQuantityDto dto);
 }

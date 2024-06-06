@@ -7,6 +7,10 @@ import com.nashtech.rookie.yasa.exceptions.NotFoundException;
 import com.nashtech.rookie.yasa.mapper.CategoryMapper;
 import com.nashtech.rookie.yasa.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +21,10 @@ public class CategoryServiceImpl implements CategoryService{
     @Autowired
     private CategoryRepository categoryRepository;
     @Override
-    public List<CategoryDto> getAll() {
-        return categoryRepository.findAll().stream().map(CategoryMapper.INSTANCE::toDto).collect(Collectors.toList());
+    public Page<CategoryDto> getAll(int page, int size, String sort, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page,size, Sort.by(sortDirection,sortBy));
+        return categoryRepository.findAll(pageable).map(CategoryMapper.INSTANCE::toDto);
     }
 
     @Override

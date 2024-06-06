@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/carts")
+@CrossOrigin
 public class CartController {
 
     @Autowired
@@ -24,9 +25,19 @@ public class CartController {
         return ResponseEntity.ok(cartService.getCart(cartId));
     }
 
+    @GetMapping()
+    public ResponseEntity<CartDto> getCart(@RequestHeader("Authorization") String bearerToken) {
+        return ResponseEntity.ok(cartService.getCart(bearerToken));
+    }
+
     @PostMapping("/{cartId}")
     public ResponseEntity<CartDto> addProductToCart(@PathVariable int cartId, @RequestBody @Valid CartItemDto cartItemDto) {
         return ResponseEntity.ok(cartService.addToCart(cartId, cartItemDto));
+    }
+
+    @PostMapping()
+    public ResponseEntity<CartDto> addProductToCart(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid CartItemDto cartItemDto) {
+        return ResponseEntity.ok(cartService.addToCart(bearerToken, cartItemDto));
     }
 
     @DeleteMapping("/{cartId}/products/{productId}")
@@ -34,8 +45,18 @@ public class CartController {
         return ResponseEntity.ok(cartService.removeProductFromCart(cartId, productId));
     }
 
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<CartDto> removeProductFromCart(@RequestHeader("Authorization") String bearerToken,@PathVariable int productId) {
+        return ResponseEntity.ok(cartService.removeProductFromCart(bearerToken, productId));
+    }
+
     @PatchMapping("/{cartId}/products/{productId}")
     public ResponseEntity<CartDto> updateProductQuantity(@PathVariable int cartId, @PathVariable int productId, @RequestBody @Valid CartUpdateQuantityDto dto) {
         return ResponseEntity.ok(cartService.updateProductQuantity(cartId,productId,dto));
+    }
+
+    @PatchMapping("/products/{productId}")
+    public ResponseEntity<CartDto> updateProductQuantity(@RequestHeader("Authorization") String bearerToken, @PathVariable int productId, @RequestBody @Valid CartUpdateQuantityDto dto) {
+        return ResponseEntity.ok(cartService.updateProductQuantity(bearerToken,productId,dto));
     }
 }

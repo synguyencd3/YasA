@@ -9,10 +9,12 @@ import com.nashtech.rookie.yasa.mapper.ProductMapper;
 import com.nashtech.rookie.yasa.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -20,8 +22,10 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public List<ProductDto> getAllProducts() {
-        return productRepository.findAll().stream().map(ProductMapper.INSTANCE::toDto).collect(Collectors.toList());
+    public Page<ProductDto> getAllProducts(int page, int size, String sort, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection,sortBy));
+        return productRepository.findAll(pageable).map(ProductMapper.INSTANCE::toDto);
     }
 
     @Override
@@ -37,8 +41,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllInCategory(int id) {
-        return productRepository.findByCategory_Id(id).stream().map(ProductMapper.INSTANCE::toDto).collect(Collectors.toList());
+    public Page<ProductDto> getAllInCategory(int id, int page, int size, String sort, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection,sortBy));
+        return productRepository.findByCategory_Id(id, pageable).map(ProductMapper.INSTANCE::toDto);
     }
 
 

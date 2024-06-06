@@ -1,0 +1,7 @@
+export const url ='http://localhost:8080/api'
+export const productUrl = url+'/products'
+export const categoryUrl = url+'/categories'
+export const cartUrl = url+'/carts'
+export const ratingUrl = url+'/ratings'
+export const loginUrl = url+'/auth/login'
+export const regsiterUrl = url+'/auth/register'

@@ -16,10 +16,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Product extends Audit{
     @Column(nullable = false)
     private String name;
     private int price;
@@ -29,16 +26,12 @@ public class Product {
     @Column(name="is_featured", nullable = false)
     private boolean isFeatured = false;
 
-//    @Column(name="average_rating")
-//    private float rating;
+    @Column(name="average_rating")
+    private float rating;
 
     @ManyToOne
     @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
-
-//    @OneToMany(mappedBy = "product")
-//    @JsonIgnore
-//    private List<Rating> rating;
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore

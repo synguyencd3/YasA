@@ -7,6 +7,7 @@ import com.nashtech.rookie.yasa.entity.Rating;
 import com.nashtech.rookie.yasa.service.rating.RatingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
@@ -27,21 +28,27 @@ public class RatingController {
     }
 
     @GetMapping
-    public List<RatingDto> getAll(@RequestParam(name="user", required = false) Integer userId,
-                               @RequestParam(name="product", required = false) Integer productId) {
-    if (userId != null && productId == null) return ratingService.getByUser(userId);
-    if (userId == null && productId != null) return ratingService.getByProduct(productId);
-    if (userId != null && productId != null) return ratingService.getByUserAndProduct(userId,productId);
-        return ratingService.getAll();
+    @CrossOrigin
+    public Page<RatingDto> getAll(@RequestParam(name="user", required = false) Integer userId,
+                                  @RequestParam(name="product", required = false) Integer productId,
+                                  @RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "5") int size
+    ) {
+    if (userId != null && productId == null) return ratingService.getByUser(userId,page,size);
+    if (userId == null && productId != null) return ratingService.getByProduct(productId,page,size);
+    if (userId != null && productId != null) return ratingService.getByUserAndProduct(userId,productId,page, size);
+        return ratingService.getAll(page, size);
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin
     public RatingDto getRating(@PathVariable(name="id") int ratingId){
        return ratingService.getRating(ratingId);
     }
 
     @PutMapping("/{id}")
-    public RatingDto updateRating(@PathVariable(name="id") int ratingId, UpdateRatingDto rating) {
+    @CrossOrigin
+    public RatingDto updateRating(@PathVariable(name="id") int ratingId,@RequestBody UpdateRatingDto rating) {
         return ratingService.updateRating(ratingId, rating);
     }
 

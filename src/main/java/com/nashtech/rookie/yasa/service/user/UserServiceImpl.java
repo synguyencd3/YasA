@@ -5,6 +5,7 @@ import com.nashtech.rookie.yasa.dto.response.UserDto;
 import com.nashtech.rookie.yasa.entity.Cart;
 import com.nashtech.rookie.yasa.entity.User;
 import com.nashtech.rookie.yasa.exceptions.CantLoginException;
+import com.nashtech.rookie.yasa.exceptions.CantRegisterException;
 import com.nashtech.rookie.yasa.exceptions.UserExistException;
 import com.nashtech.rookie.yasa.mapper.UserMapper;
 import com.nashtech.rookie.yasa.repository.UserRepository;
@@ -14,10 +15,15 @@ import com.nashtech.rookie.yasa.util.SHA521Hasher;
 import jakarta.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,7 +36,7 @@ public class UserServiceImpl implements UserService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public UserDto register(RegisterDto dto) {
+    public UserDto register(RegisterDto dto, String role) {
         //Generate salt
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
@@ -39,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
         // Map dto to User and set additional detail
         User user = UserMapper.INSTANCE.toEntity(dto);//new User();
-        user.setRole("user");
+        user.setRole(role);
         user.setSalt(Base64.getEncoder().encodeToString(salt));
         user.setSecret(hashedPassword);
         user.setCart(cartService.createCart(user));
@@ -56,14 +62,52 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto login(LoginDto dto) {
-        User user = userRepository.findByUsername(dto.getUsername());
-        byte[] salt = Base64.getDecoder().decode(user.getSalt());
-        if (SHA521Hasher.checkPassword(user.getSecret(),dto.getPassword(), salt)) {
-            UserDto responseDto = UserMapper.INSTANCE.toDto(user);
-            responseDto.setAccessKey(JWTService.createJWT(user));
-            return responseDto;
-        }
-        else
-            throw  new CantLoginException();
+            User user = userRepository.findByUsername(dto.getUsername());
+            if (user == null ) throw new CantLoginException("User not found") ;
+            if (user.getStatus().equals("banned")) throw new CantLoginException("User banned");
+            byte[] salt = Base64.getDecoder().decode(user.getSalt());
+            if (SHA521Hasher.checkPassword(user.getSecret(), dto.getPassword(), salt)) {
+                UserDto responseDto = UserMapper.INSTANCE.toDto(user);
+                responseDto.setAccessKey(JWTService.createJWT(user));
+                return responseDto;
+            } else
+                throw new CantLoginException("Wrong password");
     }
+
+    @Override
+    public UserDto adminLogin(LoginDto dto) {
+        try {
+            User user = userRepository.findByUsername(dto.getUsername());
+            if (user.getRole().equals("admin")) return login(dto);
+            else throw new CantLoginException("User is not admin");
+        } catch (CantLoginException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new CantLoginException("User not found");
+        }
+    }
+
+    @Override
+    public UserDto adminRegister(RegisterDto dto) {
+        return register(dto,"admin");
+    }
+
+    @Override
+    public Page<UserDto> getAllUser(int page, int size, String sort, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(sort);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection,sortBy));
+        return userRepository.findAll(pageable).map(UserMapper.INSTANCE::toDto);
+    }
+
+    @Override
+    public void setStatus(String username,boolean status) {
+        User user = userRepository.findByUsername(username);
+        if (status) user.setStatus("active"); else user.setStatus("banned");
+        userRepository.save(user);
+    }
+
+
+
+
 }

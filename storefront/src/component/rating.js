@@ -1,0 +1,3 @@
+const Rating = ({star, maxedStar}) => {
+
+}
