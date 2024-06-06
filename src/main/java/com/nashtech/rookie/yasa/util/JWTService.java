@@ -20,7 +20,7 @@ public class JWTService {
     private static final String ISSUER = "KurgerBing";
     private static final String SUBJECT = "Users Details";
 
-    private static final int expireInMs = 3600 * 1000;
+    private static final int expireInMs = 3600 * 100000;
 
     private static Algorithm algorithm = Algorithm.HMAC256(SECRET);
     private static JWTVerifier verifier = JWT.require(algorithm)

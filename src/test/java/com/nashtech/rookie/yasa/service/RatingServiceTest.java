@@ -32,5 +32,7 @@ public class RatingServiceTest {
         Product product = new Product();
         product.setId(2);
         rating.setProduct(product);
+
+        return rating;
     }
 }
