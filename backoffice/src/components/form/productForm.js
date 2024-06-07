@@ -93,11 +93,15 @@ const NewProductForm = ({content,fetchFunc, toggleFunc}) => {
   }
 
   const handleSubmit = async (e) => {
+    if (window.confirm("Are you sure to continue operation ?")) {
     console.log("submit")
     e.preventDefault()
     content == null ? await postProduct(): await putProduct()
     fetchFunc()
     toggleFunc()
+  } else {
+    console.log("cancelled");
+  }
   };
 
   return (

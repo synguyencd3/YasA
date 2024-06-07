@@ -13,6 +13,7 @@ const NewCategoryForm = ({fetchFunc, toggleFunc, content}) => {
       const categoryData = { name, description };
       console.log('Category created:', categoryData);
       content== null? PostItem(categoryData) : PutItem(categoryData)
+      fetchFunc()
       toggleFunc()
     } else {
       console.log("cancelled");
