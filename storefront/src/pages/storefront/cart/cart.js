@@ -63,7 +63,7 @@ const CartItems = () => {
           <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
             <div>
               <h5 className="mb-1">{item.product.name}</h5>
-              <p className="mb-1">{item.product.description}</p>
+              {/* <p className="mb-1" >{item.product.description}</p> */}
               <div className='row'>
               <small className='col-3'>Quantity:</small>
                 <div className='col-3'>

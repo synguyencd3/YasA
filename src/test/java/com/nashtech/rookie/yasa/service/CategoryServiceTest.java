@@ -105,9 +105,6 @@ public class CategoryServiceTest {
 
     @Test
     public void whenGivenId_FindCategory() {
-//        Category Category = new Category();
-//        Category.setId(1);
-//        Category.setName("test");
         var Category=setUp();
 
         when(categoryRepository.findById(Category.getId())).thenReturn(Optional.of(Category));
@@ -119,9 +116,7 @@ public class CategoryServiceTest {
 
     @Test
     public void should_throw_exception_when_Category_doesnt_exist() {
-//        Category Category = new Category();
-//        Category.setId(1);
-//        Category.setName("test");
+
         var Category=setUp();
         when(categoryRepository.findById(anyInt())).thenReturn(Optional.empty());
         categoryService.deleteCategory(Category.getId());

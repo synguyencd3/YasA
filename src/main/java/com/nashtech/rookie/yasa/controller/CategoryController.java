@@ -29,7 +29,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAll(page, size, sort, sortBy));
     }
 
-    @PostMapping()
+    @PostMapping(value ={"","/"})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<CategoryDto> newCategory(@RequestBody CreateCategoryDto dto) {
        return ResponseEntity.ok(categoryService.createCategory(dto));

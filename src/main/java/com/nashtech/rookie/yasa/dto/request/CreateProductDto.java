@@ -17,5 +17,4 @@ public class CreateProductDto {
     private String image;
     private int category;
     private boolean isFeatured;
-
 }
