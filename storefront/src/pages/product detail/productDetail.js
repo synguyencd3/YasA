@@ -1,8 +1,8 @@
 import { useParams } from 'react-router';
 import { useState, useEffect } from "react"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getToken } from '../../services/authService';
 import { cartUrl, productUrl, ratingUrl } from '../../static/const';
+import { redirect } from "react-router-dom";
 
 const ProductDetail = () => {
 
@@ -18,10 +18,17 @@ const ProductDetail = () => {
 
     const getProduct =() => {
         fetch(productUrl+`/${id}`).then(res => {
-            return res.json()
-        }).then((data) => {
+			if (res.ok) return res.json()
+			return Promise.reject(res)
+        })
+		.then((data) => {
             setProduct(data)
         })
+		.catch((res) => {
+			res.json().then((json) => {
+				alert(json.message);
+			  })
+		})
     }
 
 	const getComments = () => {
