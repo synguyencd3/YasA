@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
         // Map dto to User and set additional detail
         User user = UserMapper.INSTANCE.toEntity(dto);//new User();
         user.setRole(role);
+        user.setStatus("active");
         user.setSalt(Base64.getEncoder().encodeToString(salt));
         user.setSecret(hashedPassword);
         user.setCart(cartService.createCart(user));

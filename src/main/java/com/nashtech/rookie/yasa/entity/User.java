@@ -22,6 +22,6 @@ public class User extends Audit {
     private String role;
     @Column(nullable = false, length = 1024)
     private String salt;
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user")
     private Cart cart;
 }
